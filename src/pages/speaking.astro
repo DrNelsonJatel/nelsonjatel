@@ -3,10 +3,10 @@ import Base from '../layouts/Base.astro';
 import { SITE } from '../consts';
 
 const topics = [
-  { title: 'What Does Your Network Actually Look Like?', body: 'The hidden map of influence inside any board or organisation, and why the official structure rarely matches it.' },
-  { title: 'Tracing the Signal', body: 'How to find what matters in a noisy organisation, and how to tell a real pattern from a story you wanted to be true.' },
-  { title: 'The Hidden Architecture of Water Governance', body: 'Social network analysis applied to who actually decides when water, land, and competing interests meet. Drawn from a fifty-year study of one region.' },
-  { title: 'Weak Ties, Strong Decisions', body: 'Why the informal connections between people, the ones no policy accounts for, so often drive or stall the formal outcome.' },
+  { title: 'What Does Your Network Actually Look Like?', body: 'The hidden map of influence inside any board or organisation, and why the official structure rarely matches it.', href: '/publications', proof: 'Drawn from my published SNA research' },
+  { title: 'Tracing the Signal', body: 'How to find what matters in a noisy organisation, and how to tell a real pattern from a story you wanted to be true.', href: '/tools', proof: 'See the tools that do this' },
+  { title: 'The Hidden Architecture of Water Governance', body: 'Social network analysis applied to who actually decides when water, land, and competing interests meet. Drawn from a fifty-year study of one region.', href: '/publications', proof: 'Built on a fifty-year study' },
+  { title: 'Weak Ties, Strong Decisions', body: 'Why the informal connections between people, the ones no policy accounts for, so often drive or stall the formal outcome.', href: '/publications', proof: 'Grounded in network research' },
 ];
 const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or leadership working session'];
 ---
@@ -33,6 +33,7 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
           <div class="topic">
             <h3>{t.title}</h3>
             <p class="muted">{t.body}</p>
+            <a class="topic-proof" href={t.href}>{t.proof} →</a>
           </div>
         ))}
       </div>
@@ -68,10 +69,12 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
       <div class="stack">
         <h2>Speaker kit</h2>
         <p class="muted measure">
-          A one-page kit with topics, formats, a short bio, and a photo is on the way.
-          In the meantime, the booking form gets a conversation started fast.
+          Topics, formats, a short bio, a photo, and where I have spoken, ready to drop into your programme.
         </p>
-        <!-- When the EPK PDF exists, add: <a class="btn btn--ghost" href="/files/speaker-kit.pdf">Download the speaker kit</a> -->
+        <div class="kit-links">
+          <a class="btn btn--ghost" href="/Nelson_Jatel_Speaker_Kit.pdf" target="_blank" rel="noopener">Download the speaker kit (PDF)</a>
+          <a class="kit-view" href="/speaker-kit">View online →</a>
+        </div>
       </div>
     </div>
   </section>
@@ -121,6 +124,10 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
   .topic{ padding:1.5rem; border:1px solid var(--hairline); border-radius:3px; background:var(--ground-soft); }
   .topic h3{ font-size:1.3rem; }
   .topic p{ margin-top:0.6rem; }
+  .topic-proof{ display:inline-block; margin-top:0.85rem; color:var(--signal); font-size:0.85rem; font-weight:600; }
+  .topic-proof:hover{ color:var(--signal-hi); }
+  .kit-links{ display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap; }
+  .kit-view{ color:var(--signal); font-weight:600; font-size:0.9rem; }
   .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
   .plain{ list-style:none; padding:0; }
   .plain li{ padding:0.5rem 0; border-bottom:1px solid var(--hairline); color:var(--slate); font-family:var(--font-mono); font-size:0.9rem; }

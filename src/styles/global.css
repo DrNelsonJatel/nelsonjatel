@@ -162,7 +162,7 @@ p{ max-width:var(--measure); }
     --signal:#9a6a12; --signal-hi:#9a6a12; --node:#9a6a12;
   }
   body{ background:#fff; }
-  .site-header, .site-footer, .sticky-cta, .skip-link, .cv-dl{ display:none !important; }
+  .site-header, .site-footer, .sticky-cta, .skip-link, .cv-dl, .kit-dl, .cta-band{ display:none !important; }
   a{ text-decoration:none; }
   .section{ padding-block:0.5rem; }
 }

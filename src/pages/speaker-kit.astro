@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, PROOF_BAR, CLOSER } from '../consts';
+
+const topics = [
+  { t: 'What Does Your Network Actually Look Like?', o: 'A clear map of the influence inside a board or organisation, and why it rarely matches the org chart.' },
+  { t: 'Tracing the Signal', o: 'How to find what matters in a noisy organisation, and tell a real pattern from a convenient story.' },
+  { t: 'The Hidden Architecture of Water Governance', o: 'Social network analysis applied to who actually decides, drawn from a fifty-year study of one region.' },
+  { t: 'Weak Ties, Strong Decisions', o: 'How the informal connections no policy accounts for drive or stall the formal outcome.' },
+];
+const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or leadership working session'];
+const credentials = [
+  'Doctorate of Social Science, Royal Roads University',
+  'Professional Agrologist (P.Ag. #2862)',
+  'Adjunct Professor, UBC Okanagan',
+  '20+ years in water governance and senior project management',
+];
+---
+<Base title="Speaker kit" noindex={true}>
+  <section class="section kit">
+    <div class="wrap">
+      <header class="kit-head">
+        <img class="kit-photo" src="/images/nelson-jatel.jpg" alt="Dr. Nelson Jatel" width="1000" height="799" loading="eager" />
+        <div>
+          <p class="eyebrow">Speaker kit · Keynote, workshop, board session</p>
+          <h1>Dr. Nelson Jatel</h1>
+          <p class="kit-tag">I help leaders see the hidden networks behind their decisions, in water, in governance, and anywhere people and power connect.</p>
+          <p class="kit-contact mono">hello@nelsonjatel.com · nelsonjatel.com · linkedin.com/in/nelsonjatel</p>
+          <a class="btn btn--ghost kit-dl" href="/Nelson_Jatel_Speaker_Kit.pdf" target="_blank" rel="noopener">Download PDF</a>
+        </div>
+      </header>
+
+      <section class="kit-block">
+        <h2 class="kit-h">What audiences leave with</h2>
+        <p class="measure">Not just a talk. Depending on the format, a room can leave with a map of its own decision network, a read on where influence is concentrated, and a short list of the relationships worth strengthening before they are tested. Specific, evidence-led, and built for the people in the room.</p>
+      </section>
+
+      <section class="kit-block">
+        <h2 class="kit-h">Signature talks</h2>
+        <div class="kit-topics">
+          {topics.map((x) => (
+            <div class="kit-topic">
+              <p class="kit-topic-t">{x.t}</p>
+              <p class="muted">{x.o}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="kit-block kit-cols">
+        <div>
+          <h2 class="kit-h">Formats</h2>
+          <ul class="kit-list">{formats.map((f) => <li>{f}</li>)}</ul>
+        </div>
+        <div>
+          <h2 class="kit-h">Credentials</h2>
+          <ul class="kit-list">{credentials.map((c) => <li>{c}</li>)}</ul>
+        </div>
+      </section>
+
+      <section class="kit-block">
+        <h2 class="kit-h">Short bio</h2>
+        <p class="measure">Dr. Nelson Jatel is a water-governance leader, social network analyst, and keynote speaker based in Kelowna, British Columbia. He applies network science to how organisations actually decide, helping boards and audiences see the hidden relationships that shape governance. He holds a Doctorate of Social Science and is a Professional Agrologist.</p>
+      </section>
+
+      {PROOF_BAR.length > 0 && (
+        <section class="kit-block">
+          <h2 class="kit-h">Where I have spoken</h2>
+          <ul class="kit-proof">{PROOF_BAR.map((p) => <li>{p}</li>)}</ul>
+        </section>
+      )}
+
+      <p class="kit-closer">{CLOSER}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .kit-head{ display:grid; grid-template-columns:240px 1fr; gap:2rem; align-items:start; padding-bottom:1.5rem; border-bottom:1px solid var(--hairline); }
+  .kit-photo{ width:100%; height:auto; border-radius:4px; border:1px solid var(--hairline); }
+  .kit-tag{ font-family:var(--font-display); font-size:1.3rem; line-height:1.3; color:var(--ink); margin-top:0.5rem; max-width:38ch; }
+  .kit-contact{ color:var(--slate); font-size:0.8125rem; margin-top:0.8rem; }
+  .kit-dl{ margin-top:1rem; }
+  .kit-block{ margin-top:2rem; }
+  .kit-h{ font-size:1rem; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.12em; color:var(--slate); font-weight:500; margin-bottom:0.9rem; }
+  .kit-topics{ display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; }
+  .kit-topic-t{ font-family:var(--font-display); font-size:1.2rem; color:var(--ink); }
+  .kit-topic .muted{ margin-top:0.3rem; }
+  .kit-cols{ display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
+  .kit-list{ list-style:none; padding:0; }
+  .kit-list li{ padding:0.4rem 0; border-bottom:1px solid var(--hairline); color:var(--ink); }
+  .kit-proof{ list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:0.5rem 2rem; }
+  .kit-proof li{ font-family:var(--font-mono); font-size:0.85rem; color:var(--slate); }
+  .kit-closer{ font-family:var(--font-display); font-style:italic; color:var(--slate); font-size:1.15rem; margin-top:2rem; }
+  @media (max-width:639px){ .kit-head, .kit-topics, .kit-cols{ grid-template-columns:1fr; } .kit-photo{ max-width:240px; } }
+</style>

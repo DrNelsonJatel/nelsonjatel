@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
 import { PUBLICATIONS, type Publication } from '../data/publications';
 
 const byYear = (a: Publication, b: Publication) => b.year - a.year;
@@ -58,6 +59,7 @@ const hasContent = PUBLICATIONS.length > 0;
       )}
     </div>
   </section>
+  <CtaBand heading="Want the keynote behind the research?" />
 </Base>
 
 <style>

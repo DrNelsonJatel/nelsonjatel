@@ -1,0 +1,19 @@
+---
+// Closing booking CTA for deep pages, captures intent at the moment credibility
+// peaks (a reader arriving from Google Scholar, a tool, or the CV).
+interface Props { heading?: string; }
+const { heading = "Invite Nelson to speak to your board or audience." } = Astro.props;
+---
+<section class="section cta-band">
+  <hr class="trace" />
+  <div class="wrap cta-inner">
+    <h2>{heading}</h2>
+    <a class="btn btn--primary" href="/speaking#book">Invite Nelson to speak</a>
+  </div>
+</section>
+
+<style>
+  .cta-band .trace{ margin-bottom:var(--section-y); }
+  .cta-inner{ display:flex; flex-direction:column; align-items:flex-start; gap:1.25rem; }
+  .cta-inner h2{ max-width:22ch; }
+</style>

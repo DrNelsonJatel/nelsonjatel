@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
 import { BOOKS } from '../data/books';
 import { SITE } from '../consts';
 
@@ -59,6 +60,8 @@ const booksLd = BOOKS.map((b) => ({
   )}
 
   {booksLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
+
+  <CtaBand heading="Prefer it live? Invite Nelson to speak." />
 </Base>
 
 <style>
