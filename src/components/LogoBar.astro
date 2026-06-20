@@ -1,0 +1,27 @@
+---
+import { PROOF_BAR } from '../consts';
+interface Props { label?: string; }
+const { label = 'Where I have spoken' } = Astro.props;
+---
+{PROOF_BAR.length > 0 && (
+  <section class="logobar-section">
+    <div class="wrap">
+      <p class="eyebrow">{label}</p>
+      <ul class="logobar">
+        {PROOF_BAR.map((name) => <li>{name}</li>)}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .logobar-section{ padding-block:2rem; border-block:1px solid var(--hairline); }
+  .logobar{
+    list-style:none; padding:0; margin:1rem 0 0;
+    display:flex; flex-wrap:wrap; gap:1.25rem 2.5rem; align-items:center;
+  }
+  .logobar li{
+    font-family:var(--font-mono); font-size:0.875rem; letter-spacing:0.03em;
+    color:var(--slate); opacity:0.85;
+  }
+</style>

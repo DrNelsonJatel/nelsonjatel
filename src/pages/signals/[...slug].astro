@@ -1,0 +1,63 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import NewsletterForm from '../../components/NewsletterForm.astro';
+import { CLOSER, SITE } from '../../consts';
+
+export async function getStaticPaths() {
+  const all = await getCollection('episodes');
+  const episodes = all.filter((e) => import.meta.env.PROD ? !e.data.draft : true);
+  return episodes.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, episode, category, youtube, summary, pubDate } = entry.data;
+
+const embedUrl = `https://www.youtube-nocookie.com/embed/${youtube}`;
+const videoLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: title,
+  description: summary,
+  thumbnailUrl: `https://i.ytimg.com/vi/${youtube}/hqdefault.jpg`,
+  uploadDate: pubDate.toISOString(),
+  embedUrl,
+  contentUrl: `https://www.youtube.com/watch?v=${youtube}`,
+  author: { '@type': 'Person', name: SITE.author },
+};
+---
+<Base title={title} description={summary} image={`https://i.ytimg.com/vi/${youtube}/maxresdefault.jpg`}>
+  <article class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow"><a href="/signals">Signals in the Stream</a> · Episode {episode} · {category}</p>
+      <h1>{title}</h1>
+
+      <div class="video">
+        <iframe src={embedUrl} title={title} loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <p class="closer-line">{CLOSER}</p>
+
+      <hr class="trace" />
+      <NewsletterForm />
+      <p><a href="/signals">← All episodes</a></p>
+    </div>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(videoLd)} />
+</Base>
+
+<style>
+  .video{ position:relative; aspect-ratio:16/9; border:1px solid var(--hairline); border-radius:3px; overflow:hidden; }
+  .video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .prose :global(p){ color:var(--ink); margin-block:1rem; }
+  .prose :global(h2){ margin-top:2rem; font-size:1.5rem; }
+  .closer-line{ font-family:var(--font-display); font-style:italic; color:var(--slate); font-size:1.15rem; }
+</style>

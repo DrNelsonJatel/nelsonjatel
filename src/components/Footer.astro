@@ -1,0 +1,56 @@
+---
+import { SITE, SOCIAL, NAV, CLOSER } from '../consts';
+import NewsletterForm from './NewsletterForm.astro';
+const year = 2026;
+---
+<footer class="site-footer">
+  <hr class="trace" />
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <p class="closer">{CLOSER}</p>
+      <p class="wordmark-foot mono">{SITE.wordmark} · {SITE.descriptor}</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Footer">
+      {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    </nav>
+
+    <div class="footer-news">
+      <NewsletterForm compact />
+      <div class="social">
+        {SOCIAL.youtube && <a href={SOCIAL.youtube}>YouTube</a>}
+        {SOCIAL.linkedin && <a href={SOCIAL.linkedin}>LinkedIn</a>}
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap footer-base">
+    <p class="fine">Personal views only. Not representative of any affiliated organisation.</p>
+    <p class="fine">© {year} {SITE.author}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer{ background:var(--ground-deep); margin-top:var(--section-y); }
+  .footer-grid{
+    display:grid; grid-template-columns:1.4fr 1fr 1.4fr; gap:2.5rem;
+    padding-block:var(--section-y) 2rem;
+  }
+  .closer{ font-family:var(--font-display); font-size:1.5rem; color:var(--ink); max-width:24ch; }
+  .wordmark-foot{ color:var(--slate); font-size:0.8125rem; letter-spacing:0.04em; margin-top:1rem; }
+  .footer-nav{ display:flex; flex-direction:column; gap:0.6rem; }
+  .footer-nav a{
+    font-family:var(--font-mono); font-size:0.8125rem; letter-spacing:0.04em; color:var(--slate);
+  }
+  .footer-nav a:hover{ color:var(--ink); text-decoration:none; }
+  .social{ display:flex; gap:1.25rem; margin-top:1.25rem; }
+  .social a{ font-family:var(--font-mono); font-size:0.8125rem; color:var(--slate); }
+  .footer-base{
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    border-top:1px solid var(--hairline); padding-block:1.5rem;
+  }
+  @media (max-width:767px){
+    .footer-grid{ grid-template-columns:1fr; gap:2rem; }
+  }
+</style>

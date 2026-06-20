@@ -1,0 +1,47 @@
+---
+// Books pillar is intentionally omitted until a nonfiction title exists.
+const pillars = [
+  {
+    eyebrow: 'Speak',
+    title: 'Keynotes, workshops, and board sessions',
+    body: 'On the networks that shape how organisations decide. Specific, evidence-led, and built for the room you are putting me in.',
+    cta: 'See speaking topics',
+    href: '/speaking',
+  },
+  {
+    eyebrow: 'Signals in the Stream',
+    title: 'A weekly short on water and networks',
+    body: 'One sharp idea at a time, for people who would rather think than scroll. Every episode carries a full transcript.',
+    cta: 'Watch the latest',
+    href: '/signals',
+  },
+];
+---
+<section class="section">
+  <div class="wrap">
+    <div class="pillars">
+      {pillars.map((p) => (
+        <a class="pillar" href={p.href}>
+          <p class="eyebrow">{p.eyebrow}</p>
+          <h3>{p.title}</h3>
+          <p class="pillar-body">{p.body}</p>
+          <span class="pillar-cta">{p.cta} →</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pillars{ display:grid; grid-template-columns:repeat(2, 1fr); gap:1.5rem; }
+  .pillar{
+    display:block; padding:1.75rem; border:1px solid var(--hairline); border-radius:3px;
+    background:var(--ground-soft); color:var(--ink);
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .pillar:hover{ border-color:var(--signal); transform:translateY(-2px); text-decoration:none; }
+  .pillar h3{ margin-top:0.5rem; }
+  .pillar-body{ color:var(--slate); margin-top:0.75rem; }
+  .pillar-cta{ display:inline-block; margin-top:1.25rem; color:var(--signal); font-weight:600; }
+  @media (max-width:767px){ .pillars{ grid-template-columns:1fr; } }
+</style>

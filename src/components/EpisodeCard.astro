@@ -1,0 +1,28 @@
+---
+interface Props {
+  href: string;
+  episode: number;
+  category: string;
+  title: string;
+  summary: string;
+}
+const { href, episode, category, title, summary } = Astro.props;
+---
+<a class="ep-card" href={href}>
+  <p class="eyebrow">Episode {episode} · {category}</p>
+  <h3>{title}</h3>
+  <p class="ep-summary">{summary}</p>
+  <span class="ep-cta">Watch and read →</span>
+</a>
+
+<style>
+  .ep-card{
+    display:block; padding:1.5rem; border:1px solid var(--hairline); border-radius:3px;
+    background:var(--ground-soft); color:var(--ink);
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .ep-card:hover{ border-color:var(--signal); transform:translateY(-2px); text-decoration:none; }
+  .ep-card h3{ margin-top:0.5rem; font-size:1.3rem; }
+  .ep-summary{ color:var(--slate); margin-top:0.6rem; font-size:0.95rem; }
+  .ep-cta{ display:inline-block; margin-top:1rem; color:var(--signal); font-weight:600; font-size:0.9rem; }
+</style>

@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroSignal from '../components/HeroSignal.astro';
+import LogoBar from '../components/LogoBar.astro';
+import Pillars from '../components/Pillars.astro';
+import Testimonials from '../components/Testimonials.astro';
+import { CLOSER } from '../consts';
+---
+<Base>
+  <section class="hero">
+    <div class="wrap">
+      <HeroSignal />
+      <div class="hero-copy stack">
+        <p class="eyebrow">Keynote speaker · Networks, governance, water</p>
+        <h1>Every organisation runs on a network it can't see.</h1>
+        <p class="hero-sub measure">
+          I help leaders map the hidden relationships behind their decisions, in water,
+          in governance, and anywhere people and power connect. The patterns are already
+          there. The work is making them visible.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn--primary" href="/speaking#book">Invite Nelson to speak</a>
+          <a class="btn btn--ghost" href="/signals">Watch the latest short</a>
+        </div>
+        <p class="brand-line">{CLOSER}</p>
+      </div>
+    </div>
+  </section>
+
+  <LogoBar />
+  <Pillars />
+  <Testimonials />
+
+  <section class="section closing">
+    <div class="wrap closing-inner">
+      <h2>If your decisions run on relationships, let's map them.</h2>
+      <a class="btn btn--primary" href="/speaking#book">Invite Nelson to speak</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero{ padding-top:clamp(2rem, 5vw, 4rem); padding-bottom:var(--section-y); }
+  .hero-copy{ margin-top:clamp(1.5rem, 4vw, 3rem); }
+  .hero-sub{ color:var(--slate); font-size:1.2rem; }
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap:0.9rem; margin-top:0.5rem; }
+  .brand-line{
+    font-family:var(--font-display); font-style:italic; color:var(--slate);
+    font-size:1.15rem; margin-top:1.5rem;
+  }
+  .closing-inner{ display:flex; flex-direction:column; align-items:flex-start; gap:1.5rem; }
+  .closing-inner h2{ max-width:18ch; }
+</style>

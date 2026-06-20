@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page not found" noindex={true}>
+  <section class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow">404 · Off the map</p>
+      <h1>That page is noise, not signal.</h1>
+      <p class="measure muted">The page you were after is not here. Let's get you back to a known node.</p>
+      <div class="hero-ctas">
+        <a class="btn btn--primary" href="/">Home</a>
+        <a class="btn btn--ghost" href="/signals">Signals in the Stream</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>.hero-ctas{ display:flex; gap:0.9rem; flex-wrap:wrap; }</style>

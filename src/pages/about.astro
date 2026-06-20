@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+
+const credentials = [
+  'Doctorate of Social Science, Royal Roads University, 2023',
+  'Professional Agrologist (P.Ag. #2862)',
+  '20+ years in senior project management and water governance',
+  'Based in Kelowna, British Columbia',
+];
+---
+<Base title="About Dr. Nelson Jatel" description="Water-governance leader and social network analyst. Doctorate of Social Science, Professional Agrologist, based in Kelowna, British Columbia.">
+  <section class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow">Water · Networks</p>
+      <h1>I study how decisions really move through an organisation.</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap story stack">
+      <p>
+        I came to networks through water. For more than two decades I worked inside water
+        governance in British Columbia, the meetings, the boards, the long negotiations
+        between people who did not always agree on what the water was for. Over time I
+        noticed that the formal record, the agendas and the minutes, explained almost
+        nothing about how decisions actually happened. The real story was in the
+        relationships.
+      </p>
+      <p>
+        So I went and measured them. My doctoral research applied social network analysis
+        to a fifty-year record of regional water-governance meetings, mapping how influence
+        and decision-making moved through one institution across half a century. What it
+        showed, again and again, is that the people an organisation thinks are central
+        often are not, and the connections that hold everything together are usually the
+        ones nobody is watching.
+      </p>
+      <p>
+        That is the work I bring to other rooms now. The patterns are already there, in
+        water, in governance, and in any organisation that runs on relationships. The job
+        is making them visible, so leaders can act on what is real instead of what is
+        assumed.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div class="stack">
+        <h2>Credentials</h2>
+        <ul class="creds">{credentials.map((c) => <li>{c}</li>)}</ul>
+      </div>
+      <div class="stack">
+        <h2>Bio, lift-ready</h2>
+        <p class="muted">Three lengths, for organisers to copy into a programme.</p>
+        <details class="bio" open>
+          <summary>One line</summary>
+          <p>Dr. Nelson Jatel is a water-governance leader and social network analyst who helps boards and audiences see the hidden relationships behind their decisions.</p>
+        </details>
+        <details class="bio">
+          <summary>50 words</summary>
+          <p>Dr. Nelson Jatel is a water-governance leader, social network analyst, and keynote speaker based in Kelowna, British Columbia. He applies network science to how organisations actually decide, helping boards and audiences see the hidden relationships that shape governance. He holds a Doctorate of Social Science and is a Professional Agrologist.</p>
+        </details>
+        <details class="bio">
+          <summary>150 words</summary>
+          <p>Dr. Nelson Jatel is a water-governance leader, social network analyst, and keynote speaker based in Kelowna, British Columbia. For more than two decades he has worked at the intersection of water, governance, and the social networks that connect them, turning complex relationship data into decisions leaders can act on.</p>
+          <p>His doctoral research applied social network analysis to a fifty-year record of regional water-governance meetings, mapping how influence and decision-making actually move through an institution. He brings that same lens to corporate and government audiences: who really decides, where a network is brittle, and how informal ties shape formal outcomes.</p>
+          <p>Nelson holds a Doctorate of Social Science from Royal Roads University and is a Professional Agrologist (P.Ag.). He speaks at conferences, board retreats, and annual general meetings, and produces the short-form series Signals in the Stream, on water, networks, and the patterns beneath both.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="fine measure">
+        The views expressed are my own and do not represent the positions of the Okanagan
+        Basin Water Board, the University of British Columbia Okanagan, or any organisation
+        with which I am affiliated.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .story p{ font-size:1.15rem; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
+  .creds{ list-style:none; padding:0; }
+  .creds li{
+    padding:0.55rem 0; border-bottom:1px solid var(--hairline);
+    font-family:var(--font-mono); font-size:0.85rem; letter-spacing:0.03em; color:var(--slate);
+  }
+  .bio{ border:1px solid var(--hairline); border-radius:3px; padding:0.9rem 1.1rem; margin-bottom:0.75rem; }
+  .bio summary{ cursor:pointer; font-family:var(--font-mono); font-size:0.8125rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink); }
+  .bio p{ margin-top:0.8rem; color:var(--slate); }
+  .bio p + p{ margin-top:0.8rem; }
+  @media (max-width:767px){ .two-col{ grid-template-columns:1fr; } }
+</style>

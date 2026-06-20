@@ -1,0 +1,19 @@
+---
+// Keeps the primary conversion one tap away on mobile, on every page.
+// Quiet by design so it does not fight the minimal aesthetic.
+---
+<a class="sticky-cta" href="/speaking#book">Invite Nelson to speak</a>
+
+<style>
+  .sticky-cta{ display:none; }
+  @media (max-width:767px){
+    .sticky-cta{
+      display:block; position:fixed; left:0; right:0; bottom:0; z-index:6000;
+      text-align:center; padding:0.9rem 1rem;
+      background:var(--signal); color:var(--ground-deep);
+      font-family:var(--font-body); font-weight:600;
+      box-shadow:0 -2px 16px rgba(8,32,43,0.5);
+    }
+    .sticky-cta:hover{ text-decoration:none; color:var(--ground-deep); }
+  }
+</style>

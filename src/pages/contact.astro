@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import { FORM_ENDPOINT, SITE } from '../consts';
+---
+<Base title="Contact Dr. Nelson Jatel" description="Speaking enquiries and messages. I reply within two business days.">
+  <section class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow">Get in touch</p>
+      <h1>Let's talk.</h1>
+      <p class="measure muted">
+        The fastest way to reach me is the form below, or by email at {SITE.email}. I read
+        every message myself and reply within two business days. For speaking enquiries,
+        the <a href="/speaking#book">booking form</a> captures the details I need to give
+        you a quick, useful answer.
+      </p>
+
+      <form class="contact-form" action={FORM_ENDPOINT} method="post">
+        <input type="hidden" name="_subject" value="Message via nelsonjatel.com" />
+        <p class="hp" aria-hidden="true">
+          <label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+        </p>
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="org">Organisation (optional)</label>
+          <input id="org" name="organisation" type="text" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button class="btn btn--primary" type="submit">Send message</button>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact-form{ max-width:34rem; margin-top:1rem; }
+  .hp{ position:absolute; left:-9999px; }
+</style>

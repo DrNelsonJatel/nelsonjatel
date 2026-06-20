@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import { FORM_ENDPOINT, SITE } from '../consts';
+
+const topics = [
+  { title: 'What Does Your Network Actually Look Like?', body: 'The hidden map of influence inside any board or organisation, and why the official structure rarely matches it.' },
+  { title: 'Tracing the Signal', body: 'How to find what matters in a noisy organisation, and how to tell a real pattern from a story you wanted to be true.' },
+  { title: 'The Hidden Architecture of Water Governance', body: 'Social network analysis applied to who actually decides when water, land, and competing interests meet. Drawn from a fifty-year study of one region.' },
+  { title: 'Weak Ties, Strong Decisions', body: 'Why the informal connections between people, the ones no policy accounts for, so often drive or stall the formal outcome.' },
+];
+const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or leadership working session'];
+---
+<Base title="Book Dr. Nelson Jatel to speak" description="Keynotes, workshops, and board sessions on the networks that shape how organisations decide. Specific, evidence-led, built for your room.">
+  <section class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow">Keynotes · Workshops · Board sessions</p>
+      <h1>The room already has a network. I help you see it.</h1>
+      <p class="measure hero-sub">
+        Every board, every leadership team, every conference room runs on relationships
+        that no org chart shows. I use social network analysis to make them visible: who
+        actually decides, where influence concentrates, and where a network is brittle
+        enough to fail under pressure. You leave with a clearer picture of how your
+        organisation really works, and a few specific things to do about it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section topics-section">
+    <div class="wrap">
+      <h2>Keynote topics</h2>
+      <div class="topics">
+        {topics.map((t) => (
+          <div class="topic">
+            <h3>{t.title}</h3>
+            <p class="muted">{t.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div class="stack">
+        <h2>Formats</h2>
+        <ul class="plain">{formats.map((f) => <li>{f}</li>)}</ul>
+      </div>
+      <div class="stack">
+        <h2>What you get</h2>
+        <p class="muted measure">
+          Not just a talk. Depending on the format, you can leave with a map of your own
+          decision network, a read on where influence is concentrated, and a short list
+          of the relationships worth strengthening before they are tested.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section fees-section">
+    <div class="wrap two-col">
+      <div class="stack">
+        <h2>Fees</h2>
+        <p class="muted measure">
+          Fees vary by event, format, and location. Use the form below and I will come
+          back with a number quickly.
+        </p>
+      </div>
+      <div class="stack">
+        <h2>Speaker kit</h2>
+        <p class="muted measure">
+          A one-page kit with topics, formats, a short bio, and a photo is on the way.
+          In the meantime, the booking form gets a conversation started fast.
+        </p>
+        <!-- When the EPK PDF exists, add: <a class="btn btn--ghost" href="/files/speaker-kit.pdf">Download the speaker kit</a> -->
+      </div>
+    </div>
+  </section>
+
+  <section class="section book-section" id="book">
+    <div class="wrap">
+      <p class="eyebrow">Invite Nelson to speak</p>
+      <h2>Tell me about your event</h2>
+      <p class="muted measure">I read every enquiry personally and reply within two business days.</p>
+
+      <form class="book-form" action={FORM_ENDPOINT} method="post">
+        <input type="hidden" name="_subject" value="Speaking enquiry via nelsonjatel.com" />
+        <p class="hp" aria-hidden="true">
+          <label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="org">Organisation</label>
+          <input id="org" name="organisation" type="text" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="date">Event date</label>
+          <input id="date" name="event_date" type="text" placeholder="Date or rough timeframe" />
+        </div>
+        <div class="field">
+          <label for="detail">What you are looking for</label>
+          <textarea id="detail" name="detail" placeholder="Topic, audience size, format, anything else I should know"></textarea>
+        </div>
+        <button class="btn btn--primary" type="submit">Send enquiry</button>
+        <p class="fine form-note">Or email me directly at {SITE.email}.</p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-sub{ color:var(--slate); font-size:1.2rem; }
+  .topics{ display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; margin-top:1.5rem; }
+  .topic{ padding:1.5rem; border:1px solid var(--hairline); border-radius:3px; background:var(--ground-soft); }
+  .topic h3{ font-size:1.3rem; }
+  .topic p{ margin-top:0.6rem; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
+  .plain{ list-style:none; padding:0; }
+  .plain li{ padding:0.5rem 0; border-bottom:1px solid var(--hairline); color:var(--slate); font-family:var(--font-mono); font-size:0.9rem; }
+  .book-section{ border-top:1px solid var(--hairline); }
+  .book-form{ max-width:34rem; margin-top:1.5rem; }
+  .form-note{ margin-top:1rem; }
+  .hp{ position:absolute; left:-9999px; }
+  @media (max-width:767px){ .topics, .two-col{ grid-template-columns:1fr; } }
+</style>

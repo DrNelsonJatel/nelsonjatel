@@ -1,0 +1,92 @@
+---
+import '../styles/global.css';
+// Self-hosted brand typefaces (better performance + privacy than CDN fonts)
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource/instrument-sans/400.css';
+import '@fontsource/instrument-sans/500.css';
+import '@fontsource/instrument-sans/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import { SITE } from '../consts';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = SITE.ogImage,
+  noindex = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${SITE.title}` : `${SITE.title} · ${SITE.descriptor}`;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImageUrl = new URL(image, SITE.url).href;
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Dr. Nelson Jatel',
+  jobTitle: 'Keynote speaker and social network analyst',
+  description: SITE.description,
+  url: SITE.url,
+  email: `mailto:${SITE.email}`,
+  knowsAbout: ['Water governance', 'Social network analysis', 'Limnology', 'Organisational decision-making'],
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Royal Roads University' },
+  address: { '@type': 'PostalAddress', addressLocality: 'Kelowna', addressRegion: 'BC', addressCountry: 'CA' },
+};
+---
+
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta name="theme-color" content="#0E2A38" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content={SITE.locale} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <StickyMobileCTA />
+    <style>@media (max-width:767px){ body{ padding-bottom:3.5rem; } }</style>
+  </body>
+</html>
