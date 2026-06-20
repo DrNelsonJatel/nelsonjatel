@@ -1,5 +1,7 @@
 ---
 import { SITE, SOCIAL, navItems, CLOSER } from '../consts';
+import { TOOLS } from '../data/tools';
+import { PUBLICATIONS } from '../data/publications';
 import NewsletterForm from './NewsletterForm.astro';
 const NAV = navItems();
 const year = 2026;
@@ -14,6 +16,9 @@ const year = 2026;
 
     <nav class="footer-nav" aria-label="Footer">
       {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+      {TOOLS.length > 0 && <a href="/tools">Tools</a>}
+      {PUBLICATIONS.length > 0 && <a href="/publications">Publications</a>}
+      <a href="/cv">CV</a>
       <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
     </nav>
 

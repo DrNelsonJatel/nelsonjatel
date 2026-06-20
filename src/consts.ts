@@ -1,8 +1,6 @@
 // Central site configuration. Edit these in one place.
 // Items marked CONFIRM need a real value before launch; do not ship placeholders.
-import { PUBLICATIONS } from './data/publications';
 import { BOOKS } from './data/books';
-import { TOOLS } from './data/tools';
 
 export const SITE = {
   title: 'Dr. Nelson Jatel',
@@ -34,10 +32,9 @@ export const NAV = [
 // content, so a tab never appears empty. Header and Footer both use this.
 export function navItems(): { href: string; label: string }[] {
   const items: { href: string; label: string }[] = [...NAV];
-  let at = 2; // insert before About
-  if (TOOLS.length > 0) { items.splice(at++, 0, { href: '/tools', label: 'Tools' }); }
-  if (BOOKS.length > 0) { items.splice(at++, 0, { href: '/books', label: 'Books' }); }
-  if (PUBLICATIONS.length > 0) { items.splice(at++, 0, { href: '/publications', label: 'Publications' }); }
+  // Books stays in the primary nav; Tools and Publications are tucked under About
+  // (still live, indexed, and linked from About + the footer).
+  if (BOOKS.length > 0) { items.splice(2, 0, { href: '/books', label: 'Books' }); }
   return items;
 }
 

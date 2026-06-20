@@ -55,7 +55,11 @@ const credentials = [
       <div class="stack">
         <h2>Credentials</h2>
         <ul class="creds">{credentials.map((c) => <li>{c}</li>)}</ul>
-        <p><a href="/cv">View full CV →</a></p>
+        <p class="about-links">
+          <a href="/cv">View full CV →</a>
+          <a href="/publications">Publications →</a>
+          <a href="/tools">Water tools for local government →</a>
+        </p>
       </div>
       <div class="stack">
         <h2>Press kit</h2>
@@ -98,6 +102,8 @@ const credentials = [
   @media (max-width:767px){ .about-story{ grid-template-columns:1fr; } .portrait{ order:-1; max-width:360px; } }
   .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
   .creds{ list-style:none; padding:0; }
+  .about-links{ display:flex; flex-direction:column; gap:0.5rem; margin-top:0.75rem; }
+  .about-links a{ font-weight:600; }
   .creds li{
     padding:0.55rem 0; border-bottom:1px solid var(--hairline);
     font-family:var(--font-mono); font-size:0.85rem; letter-spacing:0.03em; color:var(--slate);
