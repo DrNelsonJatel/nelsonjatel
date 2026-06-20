@@ -29,6 +29,6 @@ export const BOOKS: Book[] = [
     format: 'Kindle ebook · Limnology Research Corp.',
     buyUrl: 'https://www.amazon.ca/dp/B0CC98Z6J8',
     buyLabel: 'Buy on Amazon',
-    // cover: '/images/book-negotiation-cocreation.jpg', // add once hosted
+    cover: '/images/book-negotiation-cocreation.jpg',
   },
 ];
