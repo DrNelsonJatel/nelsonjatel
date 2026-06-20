@@ -9,7 +9,7 @@ const credentials = [
   'Based in Kelowna, British Columbia',
 ];
 ---
-<Base title="About Dr. Nelson Jatel" description="Water-governance leader and social network analyst. Doctorate of Social Science, Professional Agrologist, based in Kelowna, British Columbia.">
+<Base title="About" description="Water-governance leader and social network analyst. Doctorate of Social Science, Professional Agrologist, based in Kelowna, British Columbia.">
   <section class="section">
     <div class="wrap stack-lg">
       <p class="eyebrow">Water · Networks</p>
@@ -18,7 +18,8 @@ const credentials = [
   </section>
 
   <section class="section">
-    <div class="wrap story stack">
+    <div class="wrap about-story">
+      <div class="story stack">
       <p>
         I came to networks through water. For more than two decades I worked inside water
         governance in British Columbia, the meetings, the boards, the long negotiations
@@ -41,6 +42,10 @@ const credentials = [
         is making them visible, so leaders can act on what is real instead of what is
         assumed.
       </p>
+      </div>
+      <figure class="portrait">
+        <img src="/images/nelson-jatel.jpg" alt="Dr. Nelson Jatel" width="1000" height="799" loading="lazy" />
+      </figure>
     </div>
   </section>
 
@@ -85,6 +90,10 @@ const credentials = [
 
 <style>
   .story p{ font-size:1.15rem; }
+  .about-story{ display:grid; grid-template-columns:1.4fr 1fr; gap:2.5rem; align-items:start; }
+  .portrait{ margin:0; }
+  .portrait img{ width:100%; height:auto; border-radius:4px; border:1px solid var(--hairline); }
+  @media (max-width:767px){ .about-story{ grid-template-columns:1fr; } .portrait{ order:-1; max-width:360px; } }
   .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
   .creds{ list-style:none; padding:0; }
   .creds li{
