@@ -46,7 +46,7 @@ export const PUBLICATIONS: Publication[] = [
     year: 2013,
     venue: 'University of British Columbia (Okanagan)',
     type: 'thesis',
-    note: "Master's thesis",
+    note: 'M.A. thesis',
     url: 'https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0074319',
   },
 ];
