@@ -39,15 +39,15 @@ export function navItems(): { href: string; label: string }[] {
 }
 
 export const SOCIAL = {
-  // CONFIRM exact YouTube handle string before launch.
   youtube: 'https://www.youtube.com/@Dr.NelsonJatel',
-  // CONFIRM LinkedIn URL, then it renders in the footer.
-  linkedin: '',
+  linkedin: 'https://www.linkedin.com/in/nelsonjatel/',
 } as const;
 
-// Booking + contact forms post here. Static-host friendly: create a free
-// Formspree (or Web3Forms) form and paste its endpoint. CONFIRM before launch.
-export const FORM_ENDPOINT = 'https://formspree.io/f/REPLACE_WITH_FORM_ID';
+// Booking + contact forms insert into Supabase (table: enquiries), the same
+// client-insert pattern as the Thresan site. Connection comes from env vars
+// (PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_KEY); see .env.example. RLS lets the
+// public key insert only, never read. The submit handler lives in
+// src/scripts/enquiry.ts.
 
 // Newsletter ESP form action (Kit / Mailchimp / Squarespace Campaigns).
 // Tie to the existing Freshwater Focus audience. CONFIRM; empty = form hidden.

@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { FORM_ENDPOINT, SITE } from '../consts';
+import { SITE } from '../consts';
 
 const topics = [
   { title: 'What Does Your Network Actually Look Like?', body: 'The hidden map of influence inside any board or organisation, and why the official structure rarely matches it.' },
@@ -82,8 +82,7 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
       <h2>Tell me about your event</h2>
       <p class="muted measure">I read every enquiry personally and reply within two business days.</p>
 
-      <form class="book-form" action={FORM_ENDPOINT} method="post">
-        <input type="hidden" name="_subject" value="Speaking enquiry via nelsonjatel.com" />
+      <form class="book-form" data-enquiry data-kind="booking" novalidate>
         <p class="hp" aria-hidden="true">
           <label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
         </p>
@@ -109,6 +108,7 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
           <textarea id="detail" name="detail" placeholder="Topic, audience size, format, anything else I should know"></textarea>
         </div>
         <button class="btn btn--primary" type="submit">Send enquiry</button>
+        <p class="form-status fine" data-status aria-live="polite"></p>
         <p class="fine form-note">Or email me directly at {SITE.email}.</p>
       </form>
     </div>
@@ -128,5 +128,13 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
   .book-form{ max-width:34rem; margin-top:1.5rem; }
   .form-note{ margin-top:1rem; }
   .hp{ position:absolute; left:-9999px; }
+  .form-status{ min-height:1.2em; margin-top:0.6rem; }
+  .form-status[data-kind="error"]{ color:#e88a8a; }
+  .form-status[data-kind="ok"]{ color:var(--ink); }
   @media (max-width:767px){ .topics, .two-col{ grid-template-columns:1fr; } }
 </style>
+
+<script>
+  import { initEnquiryForms } from '../scripts/enquiry';
+  initEnquiryForms();
+</script>

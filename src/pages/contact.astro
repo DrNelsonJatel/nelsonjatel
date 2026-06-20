@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { FORM_ENDPOINT, SITE } from '../consts';
+import { SITE } from '../consts';
 ---
 <Base title="Contact Dr. Nelson Jatel" description="Speaking enquiries and messages. I reply within two business days.">
   <section class="section">
@@ -14,8 +14,7 @@ import { FORM_ENDPOINT, SITE } from '../consts';
         you a quick, useful answer.
       </p>
 
-      <form class="contact-form" action={FORM_ENDPOINT} method="post">
-        <input type="hidden" name="_subject" value="Message via nelsonjatel.com" />
+      <form class="contact-form" data-enquiry data-kind="contact" novalidate>
         <p class="hp" aria-hidden="true">
           <label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
         </p>
@@ -36,6 +35,7 @@ import { FORM_ENDPOINT, SITE } from '../consts';
           <textarea id="message" name="message" required></textarea>
         </div>
         <button class="btn btn--primary" type="submit">Send message</button>
+        <p class="form-status fine" data-status aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -44,4 +44,12 @@ import { FORM_ENDPOINT, SITE } from '../consts';
 <style>
   .contact-form{ max-width:34rem; margin-top:1rem; }
   .hp{ position:absolute; left:-9999px; }
+  .form-status{ min-height:1.2em; margin-top:0.6rem; }
+  .form-status[data-kind="error"]{ color:#e88a8a; }
+  .form-status[data-kind="ok"]{ color:var(--ink); }
 </style>
+
+<script>
+  import { initEnquiryForms } from '../scripts/enquiry';
+  initEnquiryForms();
+</script>
