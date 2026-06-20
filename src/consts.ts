@@ -1,6 +1,7 @@
 // Central site configuration. Edit these in one place.
 // Items marked CONFIRM need a real value before launch; do not ship placeholders.
 import { PUBLICATIONS } from './data/publications';
+import { BOOKS } from './data/books';
 
 export const SITE = {
   title: 'Dr. Nelson Jatel',
@@ -28,13 +29,13 @@ export const NAV = [
   { href: '/contact', label: 'Contact' },
 ] as const;
 
-// Nav with Publications inserted (before About) only when there are entries,
-// so the tab never appears empty. Header and Footer both use this.
+// Nav with Books and Publications inserted (before About) only when they have
+// content, so a tab never appears empty. Header and Footer both use this.
 export function navItems(): { href: string; label: string }[] {
   const items: { href: string; label: string }[] = [...NAV];
-  if (PUBLICATIONS.length > 0) {
-    items.splice(2, 0, { href: '/publications', label: 'Publications' });
-  }
+  let at = 2; // insert before About
+  if (BOOKS.length > 0) { items.splice(at++, 0, { href: '/books', label: 'Books' }); }
+  if (PUBLICATIONS.length > 0) { items.splice(at++, 0, { href: '/publications', label: 'Publications' }); }
   return items;
 }
 

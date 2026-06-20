@@ -1,5 +1,6 @@
 ---
-// Books pillar is intentionally omitted until a nonfiction title exists.
+import { BOOKS } from '../data/books';
+
 const pillars = [
   {
     eyebrow: 'Speak',
@@ -16,6 +17,17 @@ const pillars = [
     href: '/signals',
   },
 ];
+
+// Books pillar appears only when there is a title to point to.
+if (BOOKS.length > 0) {
+  pillars.push({
+    eyebrow: 'Books',
+    title: 'Where the longer thinking lives',
+    body: 'Short, practical books on decision-making, negotiation, and the networks beneath both.',
+    cta: 'Browse the books',
+    href: '/books',
+  });
+}
 ---
 <section class="section">
   <div class="wrap">
@@ -33,7 +45,7 @@ const pillars = [
 </section>
 
 <style>
-  .pillars{ display:grid; grid-template-columns:repeat(2, 1fr); gap:1.5rem; }
+  .pillars{ display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem, 1fr)); gap:1.5rem; }
   .pillar{
     display:block; padding:1.75rem; border:1px solid var(--hairline); border-radius:3px;
     background:var(--ground-soft); color:var(--ink);

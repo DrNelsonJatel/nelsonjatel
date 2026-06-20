@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import { BOOKS } from '../data/books';
+import { SITE } from '../consts';
+
+const hasBooks = BOOKS.length > 0;
+const booksLd = BOOKS.map((b) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  name: b.subtitle ? `${b.title}: ${b.subtitle}` : b.title,
+  author: { '@type': 'Person', name: SITE.author },
+  datePublished: String(b.year),
+  url: b.buyUrl,
+}));
+---
+<Base
+  title="Books"
+  description="Books by Dr. Nelson Jatel on decision-making, negotiation, and the networks beneath them."
+  noindex={!hasBooks}
+>
+  <section class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow">Books</p>
+      <h1>Books</h1>
+      <p class="measure intro">Short, practical books on decision-making, negotiation, and the networks beneath them.</p>
+    </div>
+  </section>
+
+  {hasBooks && (
+    <section class="section">
+      <div class="wrap books">
+        {BOOKS.map((b) => (
+          <article class="book">
+            <div class="book-cover">
+              {b.cover ? (
+                <img src={b.cover} alt={`Cover of ${b.title}`} width="320" height="480" loading="lazy" />
+              ) : (
+                <div class="cover-fallback">
+                  <span class="cover-title">{b.title}</span>
+                  {b.subtitle && <span class="cover-sub">{b.subtitle}</span>}
+                  <span class="cover-byline">Dr. Nelson Jatel</span>
+                </div>
+              )}
+            </div>
+            <div class="book-info stack">
+              <div>
+                <h2>{b.title}</h2>
+                {b.subtitle && <p class="book-sub">{b.subtitle}</p>}
+              </div>
+              {b.format && <p class="eyebrow">{b.format} · {b.year}</p>}
+              <p>{b.description}</p>
+              {b.audience && <p class="muted"><span class="who">Who it's for:</span> {b.audience}</p>}
+              <a class="btn btn--primary" href={b.buyUrl} target="_blank" rel="noopener">{b.buyLabel ?? 'Buy'}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {booksLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
+</Base>
+
+<style>
+  .intro{ color:var(--slate); font-size:1.15rem; }
+  .books{ display:grid; gap:3rem; }
+  .book{ display:grid; grid-template-columns:240px 1fr; gap:2.5rem; align-items:start; }
+  .book-cover img{ width:100%; height:auto; border-radius:3px; border:1px solid var(--hairline); }
+  .cover-fallback{
+    aspect-ratio:2/3; border:1px solid var(--hairline); border-radius:3px;
+    background:linear-gradient(160deg, var(--ground-soft), var(--ground-deep));
+    display:flex; flex-direction:column; justify-content:center; gap:0.8rem;
+    padding:1.5rem; text-align:left;
+  }
+  .cover-title{ font-family:var(--font-display); font-size:1.6rem; line-height:1.15; color:var(--ink); }
+  .cover-sub{ font-family:var(--font-display); font-style:italic; color:var(--slate); font-size:1rem; }
+  .cover-byline{ font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--signal); margin-top:auto; }
+  .book-info h2{ font-size:2rem; }
+  .book-sub{ font-family:var(--font-display); font-style:italic; color:var(--slate); font-size:1.25rem; margin-top:0.25rem; }
+  .who{ font-family:var(--font-mono); font-size:0.8125rem; letter-spacing:0.04em; color:var(--ink); }
+  @media (max-width:639px){ .book{ grid-template-columns:1fr; gap:1.5rem; } .book-cover{ max-width:240px; } }
+</style>
