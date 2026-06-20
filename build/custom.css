@@ -1,0 +1,221 @@
+/* ============================================================
+   nelsonjatel.com  ·  Custom CSS  ·  v1
+   Hydrographic Signal design system for Squarespace 7.1
+   Paste into: Design  >  Custom CSS
+   Fonts are loaded separately via header-code-injection.html
+   ------------------------------------------------------------
+   Selector note: 7.1 is fairly stable, but a few classes vary by
+   template. Where a rule says "verify selector", inspect the live
+   element if it doesn't take, and adjust. Comments mark every
+   token so this stays maintainable.
+   ============================================================ */
+
+/* ---- 1. Design tokens ------------------------------------- */
+:root{
+  --ground-deep:#08202B;   /* darkest ground, hero top, CTA text on amber */
+  --ground:#0E2A38;        /* primary background */
+  --ground-soft:#0C2E3D;   /* section background variation */
+  --ink:#EAF2F4;           /* primary text on dark */
+  --slate:#7FA0AB;         /* secondary text, captions */
+  --recessive:#5E7A84;     /* disclaimer, fine print */
+  --node:#4A6E7C;          /* motif nodes, subtle texture */
+  --signal:#F3B24E;        /* THE accent: CTAs, traced line, key emphasis */
+  --signal-hi:#FFD27A;     /* signal highlight / hover */
+  --hairline:#26424C;      /* dividers, faint rules */
+
+  --font-display:'Instrument Serif', Georgia, serif;
+  --font-body:'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+}
+
+/* ---- 2. Ground & body type -------------------------------- */
+body,
+.sqs-layout,
+#siteWrapper{
+  background-color:var(--ground);
+  color:var(--ink);
+}
+
+body, p, li, .sqsrte-block, input, textarea, select{
+  font-family:var(--font-body);
+  font-size:1.0625rem;     /* body */
+  line-height:1.6;         /* generous: language settles */
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+
+p{ color:var(--ink); }
+a{ color:var(--signal); text-underline-offset:0.18em; }
+a:hover{ color:var(--signal-hi); }
+
+/* secondary / caption text */
+.sqsrte-small, figcaption, .image-caption{
+  color:var(--slate);
+  font-size:0.8125rem;     /* caption */
+}
+
+/* ---- 3. Display headings (Instrument Serif) --------------- */
+h1, h2, h3, h4,
+.sqsrte-block h1, .sqsrte-block h2, .sqsrte-block h3,
+.sqs-block-html h1, .sqs-block-html h2, .sqs-block-html h3{
+  font-family:var(--font-display);
+  color:var(--ink);
+  font-weight:400;         /* Instrument Serif reads best at regular weight */
+  letter-spacing:0.005em;
+  line-height:1.12;
+}
+
+h1{ font-size:3.5rem; }    /* H1 */
+h2{ font-size:2.25rem; }   /* H2 */
+h3{ font-size:1.5rem; }    /* H3 */
+
+@media (max-width:767px){
+  h1{ font-size:2.5rem; }  /* mobile-first: the shorts audience is on phones */
+  h2{ font-size:1.875rem; }
+}
+
+/* ---- 4. Utility / eyebrow voice (IBM Plex Mono) ----------- */
+/* Apply by adding class "eyebrow" to a text block, or wrap text in
+   <span class="eyebrow"> via a Code Block. Mono is the instrument voice. */
+.eyebrow,
+.nj-mono,
+.sqs-block .eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.8125rem;
+  text-transform:uppercase;
+  letter-spacing:0.18em;
+  color:var(--slate);
+  font-weight:500;
+}
+
+/* credentials, data, fine labels also use mono */
+.nj-credential{ font-family:var(--font-mono); color:var(--slate); letter-spacing:0.06em; }
+
+/* ---- 5. The signal accent -------------------------------- */
+/* signal is for large display, the motif, and CTA fills only.
+   Body text is never amber (see contrast rules). */
+.nj-signal{ color:var(--signal); }
+mark, .sqsrte-block mark{ background:transparent; color:var(--signal); }
+
+/* ---- 6. Buttons / CTAs ----------------------------------- */
+/* Primary CTA: signal fill, ground-deep text = high contrast (AA pass). */
+.sqs-block-button-element--primary,
+.sqs-block-button-element,
+.btn, button[type="submit"], .form-wrapper input[type="submit"]{
+  background-color:var(--signal) !important;
+  color:var(--ground-deep) !important;
+  font-family:var(--font-body);
+  font-weight:600;
+  letter-spacing:0.01em;
+  border-radius:2px;
+  border:none;
+  transition:background-color .2s ease, transform .2s ease;
+}
+.sqs-block-button-element--primary:hover,
+.sqs-block-button-element:hover,
+.btn:hover, button[type="submit"]:hover{
+  background-color:var(--signal-hi) !important;
+  color:var(--ground-deep) !important;
+  transform:translateY(-1px);
+}
+
+/* Secondary CTA: text link in signal, used for "Watch the latest" etc.
+   Add class "nj-link-cta" to a button block set to Secondary. */
+.sqs-block-button-element--secondary{
+  background:transparent !important;
+  color:var(--signal) !important;
+  border:1px solid var(--hairline) !important;
+}
+.sqs-block-button-element--secondary:hover{
+  border-color:var(--signal) !important;
+  color:var(--signal-hi) !important;
+}
+
+/* ---- 7. Section grounds & the hairline divider ----------- */
+/* Alternate section backgrounds: set a section's colour theme in the
+   editor, then these refine it. ground-soft for variation. */
+.page-section[data-section-theme]{ background-color:var(--ground); }
+
+/* The traced-signal hairline echo: a thin amber rule that "traces"
+   between sections. Add class "nj-trace" to a Line/Divider block, or
+   apply to a section's top border. */
+.nj-trace,
+hr.nj-trace{
+  border:none;
+  height:1px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    var(--hairline) 12%,
+    var(--signal) 50%,
+    var(--hairline) 88%,
+    transparent 100%);
+  opacity:0.9;
+  margin:0 auto;
+}
+
+/* default Squarespace dividers -> quiet hairline */
+.sqs-block-horizontalrule hr{ border-color:var(--hairline); }
+
+/* ---- 8. Forms (booking / contact) ------------------------ */
+.form-wrapper .field-list .field input,
+.form-wrapper .field-list .field textarea,
+.form-wrapper .field-list .field select{
+  background:var(--ground-soft);
+  border:1px solid var(--hairline);
+  color:var(--ink);
+  border-radius:2px;
+}
+.form-wrapper .field-list .field input:focus,
+.form-wrapper .field-list .field textarea:focus{
+  border-color:var(--signal);
+  outline:2px solid transparent;   /* keep visible focus via border + ring below */
+}
+.form-wrapper .title, .form-wrapper label, .form-wrapper .description{
+  color:var(--slate);
+  font-family:var(--font-mono);
+  font-size:0.8125rem;
+  letter-spacing:0.04em;
+}
+
+/* ---- 9. Footer & disclaimer ------------------------------ */
+.sqs-layout-footer, footer{
+  background-color:var(--ground-deep);
+  color:var(--slate);
+}
+.nj-disclaimer{
+  font-family:var(--font-mono);
+  font-size:0.75rem;
+  color:var(--recessive);
+  letter-spacing:0.04em;
+}
+
+/* ---- 10. Accessibility: visible keyboard focus ----------- */
+/* Quality floor requires a visible focus ring everywhere. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.sqs-block-button-element:focus-visible{
+  outline:2px solid var(--signal-hi);
+  outline-offset:2px;
+}
+
+/* ---- 11. Motion restraint -------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:0.001ms !important;
+    transition-duration:0.001ms !important;
+  }
+}
+
+/* ============================================================
+   CONTRAST CHECK (WCAG AA, against the grounds)
+   ink   #EAF2F4 on ground #0E2A38 .... ~13.6:1  PASS (AAA)
+   slate #7FA0AB on ground #0E2A38 .... ~5.1:1   PASS (AA normal text)
+   recessive #5E7A84 on ground ........ ~3.1:1   PASS large text / fine print only
+   ground-deep #08202B on signal #F3B24E  ~9.5:1 PASS (CTA text on amber)
+   Do NOT put signal amber as body text on ground (~6:1 is fine for large
+   display only; reserve amber for display + CTA fills per the brief).
+   Re-verify any new pair before launch.
+   ============================================================ */
