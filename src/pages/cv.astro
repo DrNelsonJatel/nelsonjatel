@@ -1,0 +1,181 @@
+---
+import Base from '../layouts/Base.astro';
+
+const competencies = [
+  'Strategic & Change Management',
+  'Social Network Analysis (SNA)',
+  'Freshwater Governance & Policy',
+  'Hydrometric Program Development',
+  'Indigenous Partnership & Co-Governance',
+  'Grant Writing & Policy Design',
+  'Executive Leadership & Board Governance',
+  'CleanTech Innovation & IP Commercialization',
+  'Climate Resilience & EFN Science',
+];
+
+const experience = [
+  {
+    role: 'Water Stewardship Director',
+    org: 'Okanagan Basin Water Board (OBWB), Kelowna, BC',
+    dates: '2007 – Present',
+    points: [
+      'Lead the Okanagan Water Stewardship Council (OWSC), maintaining 105%+ membership retention with renewed national and international partnerships.',
+      'Spearheaded the Okanagan hydrometric monitoring program with the Okanagan Nation Alliance (ONA) and Environment & Climate Change Canada, emphasizing Indigenous co-leadership and real-time decision tools.',
+      'Secured $4.5M+ in external project revenues for watershed sustainability, drought and flood planning, environmental flow needs (EFN) science, and cyanobacteria monitoring.',
+      'Developed drought-trigger modernization frameworks for municipal and provincial partners, recommending hybrid multi-indicator approaches over single-variable methods.',
+      'Co-organized the 2026 Environmental Flows Conference (with CWRA and ONA, October 2026) and led REFBC grant applications.',
+      'Authored OBWB advocacy positions and Board memoranda on hydrometric network funding, water policy, and provincial legislative engagement.',
+    ],
+  },
+  {
+    role: 'Chief Executive Officer',
+    org: 'Limnology Research Corp., Naramata, BC',
+    dates: '2001 – Present',
+    points: [
+      'Founded and operate a 20+ year consulting practice specializing in social network analysis (SNA) for government, Indigenous, NGO, and private-sector clients.',
+      'Delivered longitudinal SNA evaluations for national watershed organizations, including a multi-year network analysis for the Centre for Ocean Literacy Collaboration (COLC).',
+      'Built custom Python data pipelines and R/UCINET models for collaboration optimization, network change detection, and governance analysis.',
+    ],
+  },
+  {
+    role: 'Co-Founder & CEO',
+    org: 'BarrierFlow Technologies Inc., Kelowna, BC',
+    dates: '2023 – Present',
+    points: [
+      'Co-founded a CleanTech startup developing a patent-pending (PCT/CA2025/050399) prefabricated pipe-in-pipe water intake system that passively prevents dreissenid mussel colonization without chemicals.',
+      'Led IP strategy, technical brief development, and pilot proposals for municipal water utilities.',
+      'Advancing commercial partnerships with BC municipalities and proof-of-concept pilot deployments.',
+    ],
+  },
+  {
+    role: 'Associate Professor & Program Advisor',
+    org: 'University of British Columbia Okanagan, Kelowna, BC',
+    dates: '2023 – Present',
+    points: [
+      'Teach upper-division courses: EESC 301 Limnology and EESC 402 Water Management in the Freshwater Science program.',
+      'Designed curriculum integrating field hydrometrics, R and Python analytics, and interdisciplinary watershed case studies.',
+      'Program Advisor for the UBCO Freshwater Science program; Associate member, Institute for Community Engaged Research (ICER).',
+    ],
+  },
+  {
+    role: 'Founder & Guide',
+    org: 'Desert Salmon Charters, Kelowna, BC',
+    dates: '2022 – Present',
+    points: [
+      'Operate a licensed freshwater fishing charter on Okanagan Lake, pairing 25+ years of angling expertise with aquatic-science knowledge for recreational and corporate clients.',
+    ],
+  },
+  {
+    role: 'College Professor',
+    org: 'Okanagan College, Kelowna, BC',
+    dates: '2016',
+    points: [
+      'Delivered instruction in Applied Water Law, drawing on BC water regulatory systems and the Water Sustainability Act.',
+    ],
+  },
+];
+
+const education = [
+  { d: 'Doctor of Social Science (DSocSci)', i: 'Royal Roads University, 2023', n: 'Social network analytics in watershed governance: a 50-year longitudinal analysis of network change in the Okanagan Basin Water Board. Entrance Scholarship; Mitacs Research Award.' },
+  { d: 'Master of Arts, Economics and Governance', i: 'University of British Columbia, 2014', n: 'Graduate research: network structures in water policy.' },
+  { d: 'Bachelor of Science, Limnology', i: 'University of British Columbia, 1998', n: 'Undergraduate thesis: climate change impacts on water quality. President, UBC Limnology Club.' },
+];
+
+const projects = [
+  'Hydrometric network modernization: designed and implemented a real-time streamflow monitoring network for the Okanagan Basin with ONA and Environment Canada.',
+  'COLC social network analysis (2024–2025): built a longitudinal SNA of COLC’s partner network (2018–2025) using a validated Python pipeline; delivered six publication-ready graphics and an executive presentation.',
+  'Cyanobacteria monitoring & modelling: initiated an Okanagan-wide predictive tool integrating remote sensing and AI/ML methods.',
+  'BarrierFlow Technologies: secured international IP (PCT/CA2025/050399) and advanced municipal pilot partnerships toward commercialization.',
+];
+---
+<Base title="CV" description="Curriculum vitae of Dr. Nelson Jatel, P.Ag.: water governance, social network analysis, and applied water science.">
+  <section class="section cv">
+    <div class="wrap">
+      <header class="cv-head">
+        <div>
+          <h1>Dr. Nelson Jatel, P.Ag.</h1>
+          <p class="cv-tag">Water Governance · Social Network Analysis · CleanTech Innovation · Educator</p>
+          <p class="cv-contact mono">Kelowna, BC · hello@nelsonjatel.com · linkedin.com/in/nelsonjatel · nelsonjatel.com</p>
+        </div>
+        <a class="btn btn--ghost cv-dl" href="/Nelson_Jatel_CV_2026.pdf" target="_blank" rel="noopener">Download PDF</a>
+      </header>
+
+      <section class="cv-block">
+        <h2 class="cv-h">Professional summary</h2>
+        <p class="measure">
+          Senior executive, scholar, and entrepreneur with 20+ years of integrated expertise in
+          freshwater governance, social network analysis, and applied water science. Proven record
+          of securing $4.5M+ in external funding, leading multi-jurisdictional partnerships, and
+          translating complex research into actionable policy. Founder of two active enterprises,
+          university faculty at UBC Okanagan, and innovator behind a patent-pending CleanTech
+          solution for invasive mussel prevention. Recognized for bridging Indigenous
+          co-governance, environmental science, and organizational transformation at regional and
+          national scales.
+        </p>
+      </section>
+
+      <section class="cv-block">
+        <h2 class="cv-h">Core competencies</h2>
+        <ul class="cv-comp">{competencies.map((c) => <li>{c}</li>)}</ul>
+      </section>
+
+      <section class="cv-block">
+        <h2 class="cv-h">Professional experience</h2>
+        {experience.map((e) => (
+          <div class="cv-role">
+            <div class="cv-role-head">
+              <p class="cv-role-title">{e.role} · <span class="cv-org">{e.org}</span></p>
+              <p class="cv-dates mono">{e.dates}</p>
+            </div>
+            <ul class="cv-points">{e.points.map((p) => <li>{p}</li>)}</ul>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-block">
+        <h2 class="cv-h">Education</h2>
+        {education.map((e) => (
+          <div class="cv-edu">
+            <p class="cv-role-title">{e.d} <span class="cv-org">· {e.i}</span></p>
+            <p class="muted">{e.n}</p>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-block">
+        <h2 class="cv-h">Technical skills</h2>
+        <p class="measure"><strong class="who">Programming & analytics:</strong> Python (pandas, networkx, matplotlib), R, UCINET, SQL</p>
+        <p class="measure"><strong class="who">Data & visualization:</strong> social network analysis, longitudinal network modelling, changepoint analysis, geospatial analysis</p>
+        <p class="measure"><strong class="who">Tools & platforms:</strong> Shiny, Git, Jupyter, Google Cloud</p>
+        <p class="measure"><strong class="who">Languages:</strong> English (native), French (professional)</p>
+      </section>
+
+      <section class="cv-block">
+        <h2 class="cv-h">Selected projects & impact</h2>
+        <ul class="cv-points">{projects.map((p) => <li>{p}</li>)}</ul>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cv-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:1.5rem; flex-wrap:wrap; padding-bottom:1.5rem; border-bottom:1px solid var(--hairline); }
+  .cv-tag{ color:var(--signal); font-family:var(--font-mono); font-size:0.8125rem; letter-spacing:0.04em; margin-top:0.5rem; }
+  .cv-contact{ color:var(--slate); font-size:0.8125rem; margin-top:0.6rem; }
+  .cv-dl{ white-space:nowrap; }
+  .cv-block{ margin-top:2.25rem; }
+  .cv-h{ font-size:1.05rem; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.12em; color:var(--slate); font-weight:500; margin-bottom:1rem; }
+  .cv-comp{ list-style:none; padding:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr)); gap:0.4rem 1.5rem; }
+  .cv-comp li{ color:var(--ink); padding-left:1rem; position:relative; }
+  .cv-comp li::before{ content:'▪'; color:var(--signal); position:absolute; left:0; }
+  .cv-role{ margin-bottom:1.5rem; }
+  .cv-role-head{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; align-items:baseline; }
+  .cv-role-title{ font-family:var(--font-display); font-size:1.2rem; color:var(--ink); }
+  .cv-org{ color:var(--slate); font-size:1rem; }
+  .cv-dates{ color:var(--slate); font-size:0.8125rem; white-space:nowrap; }
+  .cv-points{ margin-top:0.5rem; padding-left:1.1rem; }
+  .cv-points li{ color:var(--ink); margin-bottom:0.35rem; }
+  .cv-edu{ margin-bottom:1.1rem; }
+  .who{ font-family:var(--font-mono); font-size:0.85rem; letter-spacing:0.03em; color:var(--ink); }
+  .cv-block .measure{ margin-bottom:0.5rem; }
+</style>

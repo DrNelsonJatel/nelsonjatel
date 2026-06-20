@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { TOOLS } from '../data/tools';
+
+const hasTools = TOOLS.length > 0;
+const stack = ['R', 'Shiny', 'GitHub', 'Google Cloud · Montréal'];
+---
+<Base
+  title="Tools"
+  description="Open water-decision tools for local government, built in R and Shiny by Dr. Nelson Jatel: stream temperature, groundwater risk, and reservoir storage."
+  noindex={!hasTools}
+>
+  <section class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow">Applied water science</p>
+      <h1>Tools for local government</h1>
+      <p class="measure intro">
+        I build these tools end to end: the data pipelines, the underlying science, and the
+        interface people actually use. They are written in R as Shiny web applications,
+        developed in the open and version-controlled on GitHub, and deployed so anyone can
+        open them in a browser with nothing to install. For tools that handle Canadian water
+        data, I host on Google Cloud's Montréal region, keeping the data on Canadian soil
+        (data sovereignty). Each one takes a hard hydrological question and turns it into
+        something a water manager can act on.
+      </p>
+      <ul class="stack-tags">
+        {stack.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  {hasTools && (
+    <section class="section">
+      <div class="wrap">
+        <div class="tools">
+          {TOOLS.map((t) => (
+            <article class="tool">
+              <h2>{t.name}</h2>
+              <p class="muted">{t.description}</p>
+              <a class="tool-link" href={t.url} target="_blank" rel="noopener">Open the tool ↗</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .intro{ color:var(--slate); font-size:1.15rem; }
+  .stack-tags{ list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:0.6rem; }
+  .stack-tags li{
+    font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--slate); border:1px solid var(--hairline); border-radius:2px; padding:0.3rem 0.6rem;
+  }
+  .tools{ display:grid; grid-template-columns:repeat(auto-fit, minmax(18rem, 1fr)); gap:1.5rem; }
+  .tool{
+    padding:1.75rem; border:1px solid var(--hairline); border-radius:3px; background:var(--ground-soft);
+    display:flex; flex-direction:column;
+  }
+  .tool h2{ font-size:1.4rem; }
+  .tool .muted{ margin-top:0.75rem; flex:1; }
+  .tool-link{ display:inline-block; margin-top:1.25rem; color:var(--signal); font-weight:600; }
+</style>

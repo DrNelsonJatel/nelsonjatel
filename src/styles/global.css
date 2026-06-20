@@ -154,6 +154,19 @@ p{ max-width:var(--measure); }
   }
 }
 
+/* ---- print: recolour to clean light document (CV download, etc.) ---- */
+@media print{
+  :root{
+    --ground:#ffffff; --ground-deep:#ffffff; --ground-soft:#ffffff;
+    --ink:#111418; --slate:#3a4a52; --recessive:#5a6a72; --hairline:#cfd8dc;
+    --signal:#9a6a12; --signal-hi:#9a6a12; --node:#9a6a12;
+  }
+  body{ background:#fff; }
+  .site-header, .site-footer, .sticky-cta, .skip-link, .cv-dl{ display:none !important; }
+  a{ text-decoration:none; }
+  .section{ padding-block:0.5rem; }
+}
+
 /* ============================================================
    CONTRAST (WCAG AA, against ground #0E2A38)
    ink #EAF2F4 ~13.6:1 AAA · slate #7FA0AB ~5.1:1 AA · recessive
