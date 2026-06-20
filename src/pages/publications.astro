@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import { PUBLICATIONS, type Publication } from '../data/publications';
+
+const byYear = (a: Publication, b: Publication) => b.year - a.year;
+const theses = PUBLICATIONS.filter((p) => p.type === 'thesis').sort(byYear);
+const papers = PUBLICATIONS.filter((p) => p.type !== 'thesis').sort(byYear);
+const hasContent = PUBLICATIONS.length > 0;
+---
+<Base
+  title="Publications"
+  description="Papers and graduate theses by Dr. Nelson Jatel, on water governance and social network analysis."
+  noindex={!hasContent}
+>
+  <section class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow">Water · Networks · Research</p>
+      <h1>Publications</h1>
+
+      {hasContent ? (
+        <div class="stack-lg pubs">
+          {theses.length > 0 && (
+            <div>
+              <h2>Graduate theses</h2>
+              <ul class="pub-list">
+                {theses.map((p) => (
+                  <li class="pub">
+                    <p class="pub-meta">{p.authors} ({p.year})</p>
+                    <p class="pub-title">
+                      {p.url ? <a href={p.url}>{p.title}</a> : p.title}
+                    </p>
+                    <p class="pub-venue">{p.venue}{p.note ? ` · ${p.note}` : ''}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {papers.length > 0 && (
+            <div>
+              <h2>Papers</h2>
+              <ul class="pub-list">
+                {papers.map((p) => (
+                  <li class="pub">
+                    <p class="pub-meta">{p.authors} ({p.year})</p>
+                    <p class="pub-title">
+                      {p.url ? <a href={p.url}>{p.title}</a> : p.title}
+                    </p>
+                    <p class="pub-venue">{p.venue}{p.note ? ` · ${p.note}` : ''}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      ) : (
+        <p class="measure muted">This list is being compiled.</p>
+      )}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pub-list{ list-style:none; padding:0; }
+  .pub{ padding:1.25rem 0; border-bottom:1px solid var(--hairline); }
+  .pub-meta{ font-family:var(--font-mono); font-size:0.8125rem; letter-spacing:0.04em; color:var(--slate); }
+  .pub-title{ font-family:var(--font-display); font-size:1.4rem; line-height:1.25; margin-top:0.35rem; color:var(--ink); }
+  .pub-venue{ color:var(--slate); margin-top:0.4rem; font-size:0.95rem; }
+</style>
