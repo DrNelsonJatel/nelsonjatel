@@ -38,7 +38,7 @@ export const PUBLICATIONS: Publication[] = [
     venue: 'Royal Roads University',
     type: 'thesis',
     note: 'Doctoral dissertation (Doctorate of Social Science)',
-    // Official Royal Roads repository link pending; add when confirmed.
+    url: 'https://www.researchgate.net/publication/370520957_Water_governance_new_performance_measures_for_diagnosing_a_watershed_organization',
   },
   {
     title: 'Using social network analysis to make invisible human actor water governance networks visible: The case of the Okanagan valley',
