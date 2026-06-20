@@ -12,7 +12,7 @@ import '@fontsource/ibm-plex-mono/500.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyMobileCTA from '../components/StickyMobileCTA.astro';
-import { SITE } from '../consts';
+import { SITE, SOCIAL } from '../consts';
 
 interface Props {
   title?: string;
@@ -40,9 +40,11 @@ const personLd = {
   description: SITE.description,
   url: SITE.url,
   email: `mailto:${SITE.email}`,
+  image: new URL('/images/nelson-jatel.jpg', SITE.url).href,
   knowsAbout: ['Water governance', 'Social network analysis', 'Limnology', 'Organisational decision-making'],
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'Royal Roads University' },
   address: { '@type': 'PostalAddress', addressLocality: 'Kelowna', addressRegion: 'BC', addressCountry: 'CA' },
+  sameAs: [SOCIAL.youtube, SOCIAL.linkedin].filter(Boolean),
 };
 ---
 
@@ -69,6 +71,7 @@ const personLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content="Dr. Nelson Jatel · Water & Networks" />
     <meta property="og:locale" content={SITE.locale} />
 
     <!-- Twitter -->

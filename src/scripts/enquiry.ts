@@ -43,13 +43,23 @@ async function submit(form: HTMLFormElement) {
   if (button) { button.disabled = true; }
   setStatus('Sending…', 'info');
 
+  // Fold optional triage fields into the message so they reach the inbox.
+  const base = field(form, 'detail') || field(form, 'message');
+  const audience = field(form, 'audience_size');
+  const budget = field(form, 'budget');
+  const extras = [
+    audience ? `Audience size: ${audience}` : '',
+    budget ? `Budget: ${budget}` : '',
+  ].filter(Boolean).join('\n');
+  const message = [base, extras].filter(Boolean).join('\n\n') || null;
+
   const payload = {
     kind: form.dataset.kind === 'booking' ? 'booking' : 'contact',
     name: field(form, 'name'),
     email: email.toLowerCase(),
     organisation: field(form, 'organisation') || null,
     event_date: field(form, 'event_date') || null,
-    message: field(form, 'detail') || field(form, 'message') || null,
+    message,
     source: form.dataset.kind || 'contact',
     referrer: document.referrer || null,
     user_agent: navigator.userAgent,

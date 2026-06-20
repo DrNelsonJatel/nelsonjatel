@@ -68,3 +68,6 @@ export const PROOF_BAR: string[] = [
 
 // Testimonials render only if this array has entries (no fabricated quotes).
 export const TESTIMONIALS: { quote: string; name: string; role: string }[] = [];
+
+// Speaker reel: a YouTube video ID (the part after watch?v=). Empty hides the reel.
+export const SPEAKER_REEL = '';

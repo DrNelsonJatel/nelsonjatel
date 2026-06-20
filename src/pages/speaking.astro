@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE } from '../consts';
+import Testimonials from '../components/Testimonials.astro';
+import { SITE, SPEAKER_REEL } from '../consts';
 
 const topics = [
   { title: 'What Does Your Network Actually Look Like?', body: 'The hidden map of influence inside any board or organisation, and why the official structure rarely matches it.', href: '/publications', proof: 'Drawn from my published SNA research' },
@@ -9,19 +10,33 @@ const topics = [
   { title: 'Weak Ties, Strong Decisions', body: 'Why the informal connections between people, the ones no policy accounts for, so often drive or stall the formal outcome.', href: '/publications', proof: 'Grounded in network research' },
 ];
 const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or leadership working session'];
+
+const speakingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Keynote speaking',
+  name: 'Keynote speaking, workshops, and board sessions',
+  description: 'Keynotes, workshops, and board sessions on social network analysis and the networks that shape how organisations decide, in water, in governance, and anywhere people and power connect.',
+  provider: { '@type': 'Person', name: 'Dr. Nelson Jatel', url: SITE.url },
+  areaServed: 'Worldwide',
+  audience: { '@type': 'Audience', audienceType: 'Conferences, boards, and leadership teams' },
+};
 ---
 <Base title="Book Nelson to speak" description="Keynotes, workshops, and board sessions on the networks that shape how organisations decide. Specific, evidence-led, built for your room.">
   <section class="section">
-    <div class="wrap stack-lg">
-      <p class="eyebrow">Keynotes · Workshops · Board sessions</p>
-      <h1>The room already has a network. I help you see it.</h1>
-      <p class="measure hero-sub">
-        Every board, every leadership team, every conference room runs on relationships
-        that no org chart shows. I use social network analysis to make them visible: who
-        actually decides, where influence concentrates, and where a network is brittle
-        enough to fail under pressure. You leave with a clearer picture of how your
-        organisation really works, and a few specific things to do about it.
-      </p>
+    <div class="wrap speaking-intro">
+      <div class="stack-lg">
+        <p class="eyebrow">Keynotes · Workshops · Board sessions</p>
+        <h1>The room already has a network. I help you see it.</h1>
+        <p class="hero-sub">
+          Every board, every leadership team, every conference room runs on relationships
+          that no org chart shows. I use social network analysis to make them visible: who
+          actually decides, where influence concentrates, and where a network is brittle
+          enough to fail under pressure. You leave with a clearer picture of how your
+          organisation really works, and a few specific things to do about it.
+        </p>
+      </div>
+      <img class="speaking-photo" src="/images/nelson-jatel.jpg" alt="Dr. Nelson Jatel speaking on water governance and networks" width="1000" height="799" loading="eager" />
     </div>
   </section>
 
@@ -56,6 +71,21 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
       </div>
     </div>
   </section>
+
+  {SPEAKER_REEL && (
+    <section class="section">
+      <div class="wrap stack">
+        <p class="eyebrow">See me present</p>
+        <div class="reel">
+          <iframe src={`https://www.youtube-nocookie.com/embed/${SPEAKER_REEL}`} title="Dr. Nelson Jatel speaker reel"
+            loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <Testimonials />
 
   <section class="section fees-section">
     <div class="wrap two-col">
@@ -107,8 +137,16 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
           <input id="date" name="event_date" type="text" placeholder="Date or rough timeframe" />
         </div>
         <div class="field">
+          <label for="audience">Audience size (optional)</label>
+          <input id="audience" name="audience_size" type="text" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="budget">Budget range (optional)</label>
+          <input id="budget" name="budget" type="text" autocomplete="off" />
+        </div>
+        <div class="field">
           <label for="detail">What you are looking for</label>
-          <textarea id="detail" name="detail" placeholder="Topic, audience size, format, anything else I should know"></textarea>
+          <textarea id="detail" name="detail" placeholder="Topic, format, anything else I should know"></textarea>
         </div>
         <button class="btn btn--primary" type="submit">Send enquiry</button>
         <p class="form-status fine" data-status aria-live="polite"></p>
@@ -116,10 +154,16 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
       </form>
     </div>
   </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(speakingLd)} />
 </Base>
 
 <style>
   .hero-sub{ color:var(--slate); font-size:1.2rem; }
+  .speaking-intro{ display:grid; grid-template-columns:1.5fr 1fr; gap:2.5rem; align-items:start; }
+  .speaking-photo{ width:100%; height:auto; border-radius:4px; border:1px solid var(--hairline); }
+  .reel{ position:relative; aspect-ratio:16/9; max-width:48rem; border:1px solid var(--hairline); border-radius:3px; overflow:hidden; margin-top:1rem; }
+  .reel iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
   .topics{ display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; margin-top:1.5rem; }
   .topic{ padding:1.5rem; border:1px solid var(--hairline); border-radius:3px; background:var(--ground-soft); }
   .topic h3{ font-size:1.3rem; }
@@ -138,7 +182,7 @@ const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or le
   .form-status{ min-height:1.2em; margin-top:0.6rem; }
   .form-status[data-kind="error"]{ color:#e88a8a; }
   .form-status[data-kind="ok"]{ color:var(--ink); }
-  @media (max-width:767px){ .topics, .two-col{ grid-template-columns:1fr; } }
+  @media (max-width:767px){ .topics, .two-col, .speaking-intro{ grid-template-columns:1fr; } .speaking-photo{ max-width:360px; } }
 </style>
 
 <script>
