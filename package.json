@@ -17,6 +17,7 @@
     "@fontsource/ibm-plex-mono": "^5.2.5",
     "@fontsource/instrument-sans": "^5.2.5",
     "@fontsource/instrument-serif": "^5.2.5",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^6.4.8"
   },
   "devDependencies": {

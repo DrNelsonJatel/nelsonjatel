@@ -33,7 +33,7 @@ const year = 2026;
 
   <div class="wrap footer-base">
     <p class="fine">This website and all of its content reflect my personal views only, and do not represent the views or positions of any organisation, employer, association, or affiliation.</p>
-    <p class="fine">© {year} {SITE.author}</p>
+    <p class="fine">© {year} {SITE.author} · <a href="/privacy">Privacy</a></p>
   </div>
 </footer>
 
@@ -56,6 +56,8 @@ const year = 2026;
     display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
     border-top:1px solid var(--hairline); padding-block:1.5rem;
   }
+  .footer-base a{ color:var(--slate); text-decoration:underline; }
+  .footer-base a:hover{ color:var(--ink); }
   @media (max-width:767px){
     .footer-grid{ grid-template-columns:1fr; gap:2rem; }
   }

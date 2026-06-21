@@ -36,6 +36,7 @@ import { SITE } from '../consts';
         </div>
         <button class="btn btn--primary" type="submit">Send message</button>
         <p class="form-status fine" data-status aria-live="polite"></p>
+        <p class="fine privacy-note">I use your details only to reply. See the <a href="/privacy">privacy note</a>.</p>
       </form>
     </div>
   </section>
@@ -47,6 +48,8 @@ import { SITE } from '../consts';
   .form-status{ min-height:1.2em; margin-top:0.6rem; }
   .form-status[data-kind="error"]{ color:#e88a8a; }
   .form-status[data-kind="ok"]{ color:var(--ink); }
+  .privacy-note{ margin-top:0.5rem; }
+  .privacy-note a{ color:var(--signal); }
 </style>
 
 <script>

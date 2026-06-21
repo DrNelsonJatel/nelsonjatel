@@ -193,6 +193,7 @@ const speakingLd = {
         <button class="btn btn--primary" type="submit">Send enquiry</button>
         <p class="form-status fine" data-status aria-live="polite"></p>
         <p class="fine form-note">Or email me directly at {SITE.email}.</p>
+        <p class="fine privacy-note">I use your details only to reply. See the <a href="/privacy">privacy note</a>.</p>
       </form>
     </div>
   </section>
@@ -233,6 +234,8 @@ const speakingLd = {
   .book-section{ border-top:1px solid var(--hairline); }
   .book-form{ max-width:34rem; margin-top:1.5rem; }
   .form-note{ margin-top:1rem; }
+  .privacy-note{ margin-top:0.4rem; }
+  .privacy-note a{ color:var(--signal); }
   .hp{ position:absolute; left:-9999px; }
   .form-status{ min-height:1.2em; margin-top:0.6rem; }
   .form-status[data-kind="error"]{ color:#e88a8a; }

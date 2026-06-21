@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../consts';
+---
+<Base
+  title="Privacy"
+  description="How Dr. Nelson Jatel collects and uses the information you share through this website."
+>
+  <section class="section">
+    <div class="wrap stack-lg measure">
+      <p class="eyebrow">Your information</p>
+      <h1>Privacy</h1>
+      <p class="lead">Plain and short, because that is how it should be. Here is exactly what happens to anything you share with this site.</p>
+
+      <div class="stack">
+        <h2>What I collect, and why</h2>
+        <p>When you use the booking or contact form, I collect the details you enter: your name, email, organisation, event details, and message. I use them for one purpose only, which is to read and reply to your enquiry.</p>
+      </div>
+
+      <div class="stack">
+        <h2>Where it goes</h2>
+        <p>Submissions are stored in a secure database (Supabase) and a copy is emailed to me so I can respond. I do not sell your information, and I do not share it with anyone except the services that run this site on my behalf.</p>
+      </div>
+
+      <div class="stack">
+        <h2>Analytics</h2>
+        <p>I use privacy-friendly analytics (Vercel Web Analytics) to see which pages are read. It does not use cookies, does not follow you across other sites, and does not collect anything that identifies you personally. It only tells me aggregate things, such as how many people viewed the Speaking page.</p>
+      </div>
+
+      <div class="stack">
+        <h2>Keeping and removing your information</h2>
+        <p>I keep enquiry details only as long as I need them to follow up. If you would like me to delete what you have sent, email me at <a href={`mailto:${SITE.email}`}>{SITE.email}</a> and I will remove it.</p>
+      </div>
+
+      <p class="fine">This site is run by me personally. If anything here is unclear, just ask.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lead{ color:var(--slate); font-size:1.2rem; }
+  .measure h2{ font-size:1.25rem; margin-bottom:0.4rem; }
+  .measure p{ color:var(--slate); }
+  .measure a{ color:var(--signal); }
+</style>
