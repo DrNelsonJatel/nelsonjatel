@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { NEWSLETTER } from '../consts';
+---
+<Base title="Unsubscribe" noindex={true}>
+  <section class="section">
+    <div class="wrap stack-lg measure">
+      <p class="eyebrow">{NEWSLETTER.name}</p>
+      <h1 id="unsub-head">Unsubscribing…</h1>
+      <p id="unsub-msg" class="lead">One moment.</p>
+      <p><a href="/">Back to nelsonjatel.com →</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lead{ color:var(--slate); font-size:1.2rem; }
+  .measure a{ color:var(--signal); }
+</style>
+
+<script>
+  import { runUnsubscribe } from '../scripts/newsletter';
+  const head = document.getElementById('unsub-head');
+  const msg = document.getElementById('unsub-msg');
+  const messages: Record<string, [string, string]> = {
+    unsubscribed: ['You are unsubscribed.', 'You will not receive any more editions of The Signal. Sorry to see you go.'],
+    already: ['Already unsubscribed.', 'This address is not on the list. Nothing more to do.'],
+    invalid: ['This link did not work.', 'It may be invalid or expired. If you still receive emails, reply to any of them and I will remove you.'],
+    error: ['Something went wrong.', 'Please try again in a moment, or email hello@nelsonjatel.com.'],
+  };
+  runUnsubscribe().then((result) => {
+    const [h, m] = messages[result] ?? messages.error;
+    if (head) head.textContent = h;
+    if (msg) msg.textContent = m;
+  });
+</script>

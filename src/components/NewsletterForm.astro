@@ -1,35 +1,50 @@
 ---
-import { NEWSLETTER_ACTION, NEWSLETTER_PROOF } from '../consts';
+import { NEWSLETTER, NEWSLETTER_PROOF } from '../consts';
 interface Props { compact?: boolean; }
 const { compact = false } = Astro.props;
-// No live placeholder: the form only renders once an ESP action is configured.
-const enabled = NEWSLETTER_ACTION.length > 0;
+// No live placeholder: the form only renders once the opt-in backend is live
+// (NEWSLETTER.enabled). The submit handler inserts into Supabase, then the
+// confirmation email completes a double opt-in.
+const enabled = NEWSLETTER.enabled;
 ---
 {enabled && (
   <div class:list={['nl', { compact }]}>
-    <p class="eyebrow">Signals in the Stream · a weekly short</p>
-    <p class="nl-prompt">One sharp idea on water and networks, most weeks. No noise.</p>
-    <form class="nl-form" action={NEWSLETTER_ACTION} method="post">
+    <p class="eyebrow">{NEWSLETTER.name} · a monthly long read</p>
+    <p class="nl-prompt">{NEWSLETTER.prompt}</p>
+    <form class="nl-form" data-newsletter novalidate>
+      <p class="hp" aria-hidden="true">
+        <label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+      </p>
       <label class="visually-hidden" for="nl-email">Email address</label>
       <input id="nl-email" type="email" name="email" required
              autocomplete="email" placeholder="you@example.com" />
       <button class="btn btn--primary" type="submit">Subscribe</button>
+      <p class="nl-status fine" data-status aria-live="polite"></p>
     </form>
     {NEWSLETTER_PROOF && <p class="fine nl-proof">Join {NEWSLETTER_PROOF} readers who trace the signal.</p>}
   </div>
 )}
 
 <style>
-  .nl-prompt{ color:var(--slate); margin-top:0.35rem; }
+  .nl-prompt{ color:var(--slate); margin-top:0.35rem; max-width:34rem; }
   .nl-form{ display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:0.9rem; max-width:30rem; }
-  .nl-form input{
+  .nl-form input[type="email"]{
     flex:1 1 14rem; background:var(--ground-soft); border:1px solid var(--hairline);
     color:var(--ink); font:inherit; padding:0.7em 0.85em; border-radius:2px;
   }
   .nl-form input:focus{ border-color:var(--signal); outline:none; }
+  .nl-status{ flex-basis:100%; min-height:1.2em; margin-top:0.2rem; }
+  .nl-status[data-kind="error"]{ color:#e88a8a; }
+  .nl-status[data-kind="ok"]{ color:var(--ink); }
   .nl-proof{ margin-top:0.6rem; }
+  .hp{ position:absolute; left:-9999px; }
   .visually-hidden{
     position:absolute; width:1px; height:1px; padding:0; margin:-1px;
     overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
   }
 </style>
+
+<script>
+  import { initNewsletterForms } from '../scripts/newsletter';
+  initNewsletterForms();
+</script>

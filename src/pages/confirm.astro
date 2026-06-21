@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { NEWSLETTER } from '../consts';
+---
+<Base title="Confirm your subscription" noindex={true}>
+  <section class="section">
+    <div class="wrap stack-lg measure">
+      <p class="eyebrow">{NEWSLETTER.name}</p>
+      <h1 id="confirm-head">Confirming…</h1>
+      <p id="confirm-msg" class="lead">One moment while I confirm your subscription.</p>
+      <p><a href="/newsletter">Read the latest edition →</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lead{ color:var(--slate); font-size:1.2rem; }
+  .measure a{ color:var(--signal); }
+</style>
+
+<script>
+  import { runConfirm } from '../scripts/newsletter';
+  const head = document.getElementById('confirm-head');
+  const msg = document.getElementById('confirm-msg');
+  const messages: Record<string, [string, string]> = {
+    confirmed: ['You are in.', 'Welcome to The Signal. The next edition will land in your inbox. One idea a month, traced in full.'],
+    already: ['Already confirmed.', 'You are on the list, nothing more to do. Thank you for reading.'],
+    unsubscribed: ['This address was unsubscribed.', 'If that was a mistake, you can subscribe again from the newsletter page.'],
+    invalid: ['This link did not work.', 'It may have expired or already been used. Try subscribing again from the newsletter page.'],
+    error: ['Something went wrong.', 'Please try again in a moment, or email hello@nelsonjatel.com.'],
+  };
+  runConfirm().then((result) => {
+    const [h, m] = messages[result] ?? messages.error;
+    if (head) head.textContent = h;
+    if (msg) msg.textContent = m;
+  });
+</script>

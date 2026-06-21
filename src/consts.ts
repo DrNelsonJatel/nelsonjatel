@@ -49,9 +49,16 @@ export const SOCIAL = {
 // public key insert only, never read. The submit handler lives in
 // src/scripts/enquiry.ts.
 
-// Newsletter ESP form action (Kit / Mailchimp / Squarespace Campaigns).
-// Tie to the existing Freshwater Focus audience. CONFIRM; empty = form hidden.
-export const NEWSLETTER_ACTION = '';
+// The Signal: a monthly long-read newsletter, the companion to the weekly
+// Signals in the Stream shorts. Native build on Supabase (subscribers, double
+// opt-in) + Resend (delivery), with a web archive under /newsletter.
+export const NEWSLETTER = {
+  name: 'The Signal',
+  tagline: 'The monthly long read from Signals in the Stream.',
+  prompt: 'One idea a month from where water, governance, and networks meet. Traced in full, no noise.',
+  // Flip to true once the double opt-in backend is live; gates the signup form.
+  enabled: true,
+} as const;
 
 // Only render once it is a true, current number. Empty = line is hidden.
 export const NEWSLETTER_PROOF = '';

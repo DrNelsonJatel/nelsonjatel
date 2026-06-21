@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import NewsletterForm from '../../components/NewsletterForm.astro';
+import { NEWSLETTER } from '../../consts';
+
+const all = await getCollection('newsletter');
+const issues = all
+  .filter((e) => (import.meta.env.PROD ? !e.data.draft : true))
+  .sort((a, b) => b.data.issue - a.data.issue);
+
+const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long' });
+---
+<Base
+  title={NEWSLETTER.name}
+  description={`${NEWSLETTER.name}: ${NEWSLETTER.prompt}`}
+>
+  <section class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow">A monthly long read · Water × networks</p>
+      <h1>{NEWSLETTER.name}</h1>
+      <p class="measure intro">{NEWSLETTER.prompt} It is the longer, slower companion to my weekly <a href="/signals">Signals in the Stream</a> shorts.</p>
+      <NewsletterForm />
+    </div>
+  </section>
+
+  {issues.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <h2>Editions</h2>
+        <ul class="issue-list">
+          {issues.map((e) => (
+            <li class="issue">
+              <a href={`/newsletter/${e.id}/`}>
+                <p class="issue-meta mono">Issue {e.data.issue} · {fmt(e.data.pubDate)}</p>
+                <p class="issue-title">{e.data.title}</p>
+                <p class="issue-dek">{e.data.dek}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .intro{ color:var(--slate); font-size:1.15rem; }
+  .intro a{ color:var(--signal); }
+  .issue-list{ list-style:none; padding:0; }
+  .issue{ border-bottom:1px solid var(--hairline); }
+  .issue a{ display:block; padding:1.25rem 0; color:inherit; }
+  .issue a:hover{ text-decoration:none; }
+  .issue a:hover .issue-title{ color:var(--signal); }
+  .issue-meta{ font-size:0.8125rem; letter-spacing:0.04em; color:var(--slate); }
+  .issue-title{ font-family:var(--font-display); font-size:1.5rem; line-height:1.2; margin-top:0.3rem; color:var(--ink); }
+  .issue-dek{ color:var(--slate); margin-top:0.4rem; max-width:52ch; }
+</style>
