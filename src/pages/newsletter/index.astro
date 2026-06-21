@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import NewsletterForm from '../../components/NewsletterForm.astro';
-import { NEWSLETTER } from '../../consts';
+import { NEWSLETTER, NEWSLETTER_LOCKUP } from '../../consts';
 
 const all = await getCollection('newsletter');
 const issues = all
@@ -12,14 +12,14 @@ const issues = all
 const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long' });
 ---
 <Base
-  title={NEWSLETTER.name}
-  description={`${NEWSLETTER.name}: ${NEWSLETTER.prompt}`}
+  title={NEWSLETTER_LOCKUP}
+  description={`${NEWSLETTER_LOCKUP}: ${NEWSLETTER.prompt}`}
 >
   <section class="section">
     <div class="wrap stack-lg">
-      <p class="eyebrow">A monthly field note · Water × networks</p>
-      <h1>{NEWSLETTER.name}</h1>
-      <p class="measure intro">{NEWSLETTER.prompt} The written companion to the monthly vlog, alongside my weekly <a href="/signals">Signals in the Stream</a> shorts.</p>
+      <p class="eyebrow">A monthly publication · Networks, change, decisions</p>
+      <h1>{NEWSLETTER_LOCKUP}</h1>
+      <p class="measure intro">{NEWSLETTER.prompt} The written companion to the monthly vlog.</p>
       <NewsletterForm />
     </div>
   </section>

@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
-import { SITE, NEWSLETTER } from '../../consts.ts';
+import { SITE, NEWSLETTER, NEWSLETTER_LOCKUP } from '../../consts.ts';
 
 export async function GET(context) {
   const all = await getCollection('newsletter');
@@ -9,8 +9,8 @@ export async function GET(context) {
     .sort((a, b) => b.data.issue - a.data.issue);
 
   return rss({
-    title: NEWSLETTER.name,
-    description: NEWSLETTER.tagline,
+    title: NEWSLETTER_LOCKUP,
+    description: NEWSLETTER.prompt,
     site: context.site ?? SITE.url,
     items: editions.map((e) => ({
       title: `Issue ${e.data.issue}: ${e.data.title}`,

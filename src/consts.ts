@@ -5,15 +5,16 @@ import { BOOKS } from './data/books';
 export const SITE = {
   title: 'Dr. Nelson Jatel',
   wordmark: 'Dr. Nelson Jatel',
-  descriptor: 'Water & Networks',
+  // Channel descriptor. Kept as a single constant so it swaps in one place.
+  descriptor: 'Social Networks, Change & Decisions',
   url: 'https://nelsonjatel.com',
   email: 'hello@nelsonjatel.com',
   author: 'Dr. Nelson Jatel',
   locale: 'en_CA',
   description:
-    'Keynote speaker and social network analyst. I help leaders map the hidden ' +
-    'relationships behind their decisions, in water, in governance, and anywhere ' +
-    'people and power connect.',
+    'Keynote speaker and social network analyst. I trace how decisions actually ' +
+    'get made and how change really happens, through the hidden networks behind ' +
+    'them. Drawn from twenty years of mapping real networks.',
   ogImage: '/images/og-endcard.png',
 } as const;
 
@@ -23,7 +24,7 @@ export const CLOSER = 'It all feels like noise, until you trace the signal.';
 // exists (no live placeholders). Add { href: '/books', label: 'Books' } then.
 export const NAV = [
   { href: '/speaking', label: 'Speaking' },
-  { href: '/signals', label: 'Signals in the Stream' },
+  { href: '/newsletter', label: 'The Signal' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ] as const;
@@ -49,16 +50,20 @@ export const SOCIAL = {
 // public key insert only, never read. The submit handler lives in
 // src/scripts/enquiry.ts.
 
-// The Signal: a monthly field-note newsletter, the written companion to the
-// monthly vlog. Native build on Supabase (subscribers, double opt-in) + Kit
-// (delivery/automations; Resend fallback), with a web archive under /newsletter.
+// The Signal · Weak Ties: the monthly publication (newsletter + vlog) on the
+// hidden networks behind how we decide and how we change. Native build on
+// Supabase (subscribers, double opt-in) + Kit (delivery/automations; Resend
+// fallback), with a web archive under /newsletter.
 export const NEWSLETTER = {
   name: 'The Signal',
-  tagline: 'A monthly field note on water, governance, and networks.',
-  prompt: 'One idea a month from where water, governance, and networks meet. Traced in full, no noise.',
+  series: 'Weak Ties', // masthead lockup: "The Signal · Weak Ties"
+  prompt: 'One idea a month on the hidden networks behind how we decide and how we change. Traced in full, no noise.',
   // Flip to true once the double opt-in backend is live; gates the signup form.
   enabled: true,
 } as const;
+
+// Masthead lockup for the publication, used wherever the brand is shown.
+export const NEWSLETTER_LOCKUP = `${NEWSLETTER.name} · ${NEWSLETTER.series}`;
 
 // Only render once it is a true, current number. Empty = line is hidden.
 export const NEWSLETTER_PROOF = '';

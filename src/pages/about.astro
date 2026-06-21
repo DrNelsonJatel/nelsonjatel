@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
+import { CLOSER } from '../consts';
 
 const credentials = [
   'Doctorate of Social Science, Royal Roads University, 2023',
@@ -10,10 +11,10 @@ const credentials = [
   'Based in Kelowna, British Columbia',
 ];
 ---
-<Base title="About" description="Water-governance leader and social network analyst. Doctorate of Social Science, Professional Agrologist, based in Kelowna, British Columbia.">
+<Base title="About" description="Social network analyst. I trace how decisions get made and how change happens, through the networks behind them. Doctorate of Social Science, based in Kelowna, British Columbia.">
   <section class="section">
     <div class="wrap stack-lg">
-      <p class="eyebrow">Water · Networks</p>
+      <p class="eyebrow">Social Networks · Change · Decisions</p>
       <h1>I study how decisions really move through an organisation.</h1>
     </div>
   </section>
@@ -50,6 +51,17 @@ const credentials = [
     </div>
   </section>
 
+  <section class="section weak-ties">
+    <div class="wrap measure stack">
+      <p class="eyebrow">Why "Weak Ties"</p>
+      <h2>The name encodes the thesis.</h2>
+      <p>The name comes from a 1973 paper by the sociologist Mark Granovetter, "The Strength of Weak Ties," one of the most cited ideas in social science. The argument is counterintuitive. Your strong ties, close friends, family, the people you see every day, tend to know what you already know, because you all move in the same circle. Your weak ties, the acquaintances and casual contacts, reach into circles you do not, so they are the ones who carry new information across the gaps. Granovetter found that people more often landed jobs through these weaker connections than through their closest ones.</p>
+      <p>That gap-crossing is the point. Weak ties are the bridges in a network, and information, influence, and change travel across bridges. The quiet person who connects two groups that would otherwise never talk often shapes a decision more than whoever sits at the top of the chart. You cannot see this on an org chart. You can only see it by mapping the relationships themselves, which is what social network analysis does.</p>
+      <p>That is what this work is about: how decisions actually get made, and how change actually spreads. Not the formal version on paper, but the real version that runs through people and the ties between them. I have spent twenty years tracing these networks. The examples come from water and many other settings, but the lesson is general: if you want to understand a decision or a change, follow the ties, especially the weak ones.</p>
+      <p class="weak-ties-closer">{CLOSER}</p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="wrap two-col">
       <div class="stack">
@@ -66,17 +78,17 @@ const credentials = [
         <p class="muted">Lift-ready bios in three lengths, for organisers to copy into a programme.</p>
         <details class="bio" open>
           <summary>One line</summary>
-          <p>Dr. Nelson Jatel is a water-governance leader and social network analyst who helps boards and audiences see the hidden relationships behind their decisions.</p>
+          <p>Dr. Nelson Jatel is a social network analyst who helps boards and audiences see the hidden relationships behind their decisions.</p>
         </details>
         <details class="bio">
           <summary>50 words</summary>
-          <p>Dr. Nelson Jatel is a water-governance leader, social network analyst, and keynote speaker based in Kelowna, British Columbia. He applies network science to how organisations actually decide, helping boards and audiences see the hidden relationships that shape governance. He holds a Doctorate of Social Science and is a Professional Agrologist.</p>
+          <p>Dr. Nelson Jatel is a social network analyst and keynote speaker based in Kelowna, British Columbia. He traces how decisions actually get made and how change really spreads, through the networks behind them, in water and many other settings. He holds a Doctorate of Social Science and is a Professional Agrologist.</p>
         </details>
         <details class="bio">
           <summary>150 words</summary>
-          <p>Dr. Nelson Jatel is a water-governance leader, social network analyst, and keynote speaker based in Kelowna, British Columbia. For more than two decades he has worked at the intersection of water, governance, and the social networks that connect them, turning complex relationship data into decisions leaders can act on.</p>
+          <p>Dr. Nelson Jatel is a social network analyst and keynote speaker based in Kelowna, British Columbia. For more than two decades he has mapped how decisions actually get made and how change really spreads, the hidden relationships behind them, turning complex relationship data into decisions leaders can act on.</p>
           <p>His doctoral research applied social network analysis to a fifty-year record of regional water-governance meetings, mapping how influence and decision-making actually move through an institution. He brings that same lens to corporate and government audiences: who really decides, where a network is brittle, and how informal ties shape formal outcomes.</p>
-          <p>Nelson holds a Doctorate of Social Science from Royal Roads University and is a Professional Agrologist (P.Ag.). He speaks at conferences, board retreats, and annual general meetings, and produces the short-form series Signals in the Stream, on water, networks, and the patterns beneath both.</p>
+          <p>Nelson holds a Doctorate of Social Science from Royal Roads University and is a Professional Agrologist (P.Ag.). He speaks at conferences, board retreats, and annual general meetings, and produces The Signal · Weak Ties, on the hidden networks behind how we decide and how we change.</p>
         </details>
       </div>
     </div>
@@ -96,6 +108,9 @@ const credentials = [
 
 <style>
   .story p{ font-size:1.15rem; }
+  .weak-ties{ border-top:1px solid var(--hairline); }
+  .weak-ties p{ color:var(--slate); }
+  .weak-ties-closer{ font-family:var(--font-display); font-style:italic; color:var(--slate); font-size:1.15rem; margin-top:1rem; }
   .about-story{ display:grid; grid-template-columns:1.4fr 1fr; gap:2.5rem; align-items:start; }
   .portrait{ margin:0; }
   .portrait img{ width:100%; height:auto; border-radius:4px; border:1px solid var(--hairline); }

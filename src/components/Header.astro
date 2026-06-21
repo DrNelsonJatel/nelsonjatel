@@ -46,7 +46,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
   .nav{ display:flex; align-items:center; gap:clamp(1rem, 2.2vw, 2rem); }
   .nav-link{
     font-family:var(--font-mono); font-size:0.8125rem; letter-spacing:0.06em;
-    text-transform:uppercase; color:var(--slate);
+    text-transform:uppercase; color:var(--slate); white-space:nowrap;
   }
   .nav-link:hover{ color:var(--ink); text-decoration:none; }
   .nav-link.active{ color:var(--ink); }

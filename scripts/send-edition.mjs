@@ -80,7 +80,7 @@ const bodyHtml = marked.parse(body)
 
 const html = `<div style="background:#F4F6F6;padding:24px 0;font-family:${SANS}">
   <div style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #E2E8EA;border-radius:4px;padding:36px 40px;color:${INK};font-size:17px;line-height:1.7">
-    <p style="font-family:ui-monospace,'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.12em;color:${SLATE};text-transform:uppercase;margin:0">The Signal &middot; Issue ${meta.issue}</p>
+    <p style="font-family:ui-monospace,'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.12em;color:${SLATE};text-transform:uppercase;margin:0">The Signal &middot; Weak Ties &middot; Issue ${meta.issue}</p>
     <h1 style="font-family:${SERIF};font-size:28px;line-height:1.2;color:${TEAL};margin:0.3em 0 0.2em">${meta.title}</h1>
     <p style="font-family:${SERIF};color:${SLATE};font-style:italic;font-size:18px;margin:0">${meta.dek}</p>
     <hr style="border:0;border-top:2px solid ${SIGNAL};width:48px;margin:22px 0 26px 0;height:0" />
@@ -92,7 +92,7 @@ const html = `<div style="background:#F4F6F6;padding:24px 0;font-family:${SANS}"
 
 // Plain-text version: strip the lightest markdown so it reads cleanly.
 const text =
-  `THE SIGNAL · Issue ${meta.issue}\n${meta.title}\n${meta.dek}\n\n` +
+  `THE SIGNAL · WEAK TIES · Issue ${meta.issue}\n${meta.title}\n${meta.dek}\n\n` +
   body.replace(/^#+\s*/gm, '').replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1') +
   `\n\nRead online: ${editionUrl}`;
 

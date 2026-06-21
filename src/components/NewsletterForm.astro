@@ -1,5 +1,5 @@
 ---
-import { NEWSLETTER, NEWSLETTER_PROOF } from '../consts';
+import { NEWSLETTER, NEWSLETTER_LOCKUP, NEWSLETTER_PROOF } from '../consts';
 interface Props { compact?: boolean; }
 const { compact = false } = Astro.props;
 // No live placeholder: the form only renders once the opt-in backend is live
@@ -9,7 +9,7 @@ const enabled = NEWSLETTER.enabled;
 ---
 {enabled && (
   <div class:list={['nl', { compact }]}>
-    <p class="eyebrow">{NEWSLETTER.name} · a monthly field note</p>
+    <p class="eyebrow">{NEWSLETTER_LOCKUP} · monthly</p>
     <p class="nl-prompt">{NEWSLETTER.prompt}</p>
     <form class="nl-form" data-newsletter novalidate>
       <p class="hp" aria-hidden="true">

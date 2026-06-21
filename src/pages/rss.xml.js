@@ -9,8 +9,8 @@ export async function GET(context) {
     .sort((a, b) => b.data.pubDate - a.data.pubDate);
 
   return rss({
-    title: 'Signals in the Stream',
-    description: 'A short series on water and the social networks beneath it, by Dr. Nelson Jatel.',
+    title: 'The Signal · Weak Ties · shorts',
+    description: 'Weekly short videos on the hidden networks behind how decisions get made and how change happens, by Dr. Nelson Jatel.',
     site: context.site ?? SITE.url,
     items: episodes.map((e) => ({
       title: e.data.title,
