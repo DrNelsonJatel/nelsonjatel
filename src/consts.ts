@@ -15,7 +15,7 @@ export const SITE = {
     'Keynote speaker and social network analyst. I trace how decisions actually ' +
     'get made and how change really happens, through the hidden networks behind ' +
     'them. Drawn from twenty years of mapping real networks.',
-  ogImage: '/images/og-endcard.png',
+  ogImage: '/images/og-endcard.jpg',
 } as const;
 
 export const CLOSER = 'It all feels like noise, until you trace the signal.';
