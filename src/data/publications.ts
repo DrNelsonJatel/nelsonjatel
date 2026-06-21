@@ -58,11 +58,11 @@ export const PUBLICATIONS: Publication[] = [
   },
   {
     title: 'Indigenous Watershed Initiatives and Co-Governance Arrangements: A British Columbia Systematic Review',
-    authors: 'Jatel, N.',
+    authors: 'First Nations Fisheries Council & Centre for Indigenous Environmental Resources',
     year: 2016,
-    venue: 'First Nations Fisheries Council & Centre for Indigenous Environmental Resources',
+    venue: 'Watersheds BC',
     type: 'report',
-    note: 'Final report',
+    note: 'Lead author of the social network analysis research (N. Jatel)',
     url: 'https://watershedsbc.ca/resource/indigenous-watershed-initiatives-and-co-governance-arrangements-a-british-columbia-systematic-review/',
   },
   {

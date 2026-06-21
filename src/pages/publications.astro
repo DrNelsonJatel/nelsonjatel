@@ -29,7 +29,7 @@ const hasContent = PUBLICATIONS.length > 0;
                   <li class="pub">
                     <p class="pub-meta">{p.authors} ({p.year})</p>
                     <p class="pub-title">
-                      {p.url ? <a href={p.url}>{p.title}</a> : p.title}
+                      {p.url ? <a href={p.url} target="_blank" rel="noopener">{p.title}</a> : p.title}
                     </p>
                     <p class="pub-venue">{p.venue}{p.note ? ` · ${p.note}` : ''}</p>
                   </li>
@@ -46,7 +46,7 @@ const hasContent = PUBLICATIONS.length > 0;
                   <li class="pub">
                     <p class="pub-meta">{p.authors} ({p.year})</p>
                     <p class="pub-title">
-                      {p.url ? <a href={p.url}>{p.title}</a> : p.title}
+                      {p.url ? <a href={p.url} target="_blank" rel="noopener">{p.title}</a> : p.title}
                     </p>
                     <p class="pub-venue">{p.venue}{p.note ? ` · ${p.note}` : ''}</p>
                   </li>
@@ -63,7 +63,7 @@ const hasContent = PUBLICATIONS.length > 0;
                   <li class="pub">
                     <p class="pub-meta">{p.authors} ({p.year})</p>
                     <p class="pub-title">
-                      {p.url ? <a href={p.url}>{p.title}</a> : p.title}
+                      {p.url ? <a href={p.url} target="_blank" rel="noopener">{p.title}</a> : p.title}
                     </p>
                     <p class="pub-venue">{p.venue}{p.note ? ` · ${p.note}` : ''}</p>
                   </li>
