@@ -13,3 +13,6 @@ dist
 # case-insensitive filesystems (macOS).
 /Images/
 /files/
+
+# Deliverable docs (briefs, memos, brand source) stay local, not in the public repo
+Filing Structure/
