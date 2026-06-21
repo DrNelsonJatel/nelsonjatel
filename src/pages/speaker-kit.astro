@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE, PROOF_BAR, CLOSER } from '../consts';
+import { SITE, CLOSER } from '../consts';
+import { SPEAKING_HISTORY } from '../data/engagements';
 
 const topics = [
   { t: 'What Does Your Network Actually Look Like?', o: 'A clear map of the influence inside a board or organisation, and why it rarely matches the org chart.' },
@@ -63,10 +64,17 @@ const credentials = [
         <p class="measure">Dr. Nelson Jatel is a water-governance leader, social network analyst, and keynote speaker based in Kelowna, British Columbia. He applies network science to how organisations actually decide, helping boards and audiences see the hidden relationships that shape governance. He holds a Doctorate of Social Science and is a Professional Agrologist.</p>
       </section>
 
-      {PROOF_BAR.length > 0 && (
+      {SPEAKING_HISTORY.length > 0 && (
         <section class="kit-block">
-          <h2 class="kit-h">Where I have spoken</h2>
-          <ul class="kit-proof">{PROOF_BAR.map((p) => <li>{p}</li>)}</ul>
+          <h2 class="kit-h">Selected speaking engagements</h2>
+          <ul class="kit-engagements">
+            {SPEAKING_HISTORY.map((e) => (
+              <li>
+                <span class="kit-eng-year mono">{e.year}</span>
+                {e.url ? <a href={e.url} target="_blank" rel="noopener">{e.title}</a> : e.title}{e.host ? `, ${e.host}` : ''}
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
@@ -89,8 +97,9 @@ const credentials = [
   .kit-cols{ display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
   .kit-list{ list-style:none; padding:0; }
   .kit-list li{ padding:0.4rem 0; border-bottom:1px solid var(--hairline); color:var(--ink); }
-  .kit-proof{ list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:0.5rem 2rem; }
-  .kit-proof li{ font-family:var(--font-mono); font-size:0.85rem; color:var(--slate); }
+  .kit-engagements{ list-style:none; padding:0; }
+  .kit-engagements li{ padding:0.4rem 0; border-bottom:1px solid var(--hairline); color:var(--ink); font-size:0.95rem; }
+  .kit-eng-year{ color:var(--signal); font-size:0.85rem; margin-right:0.6rem; }
   .kit-closer{ font-family:var(--font-display); font-style:italic; color:var(--slate); font-size:1.15rem; margin-top:2rem; }
   @media (max-width:639px){ .kit-head, .kit-topics, .kit-cols{ grid-template-columns:1fr; } .kit-photo{ max-width:240px; } }
 </style>

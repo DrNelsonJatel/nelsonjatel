@@ -5,7 +5,8 @@ import { PUBLICATIONS, type Publication } from '../data/publications';
 
 const byYear = (a: Publication, b: Publication) => b.year - a.year;
 const theses = PUBLICATIONS.filter((p) => p.type === 'thesis').sort(byYear);
-const papers = PUBLICATIONS.filter((p) => p.type !== 'thesis').sort(byYear);
+const reports = PUBLICATIONS.filter((p) => p.type === 'report').sort(byYear);
+const papers = PUBLICATIONS.filter((p) => p.type !== 'thesis' && p.type !== 'report').sort(byYear);
 const hasContent = PUBLICATIONS.length > 0;
 ---
 <Base
@@ -42,6 +43,23 @@ const hasContent = PUBLICATIONS.length > 0;
               <h2>Papers</h2>
               <ul class="pub-list">
                 {papers.map((p) => (
+                  <li class="pub">
+                    <p class="pub-meta">{p.authors} ({p.year})</p>
+                    <p class="pub-title">
+                      {p.url ? <a href={p.url}>{p.title}</a> : p.title}
+                    </p>
+                    <p class="pub-venue">{p.venue}{p.note ? ` · ${p.note}` : ''}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {reports.length > 0 && (
+            <div>
+              <h2>Reports &amp; applied SNA projects</h2>
+              <ul class="pub-list">
+                {reports.map((p) => (
                   <li class="pub">
                     <p class="pub-meta">{p.authors} ({p.year})</p>
                     <p class="pub-title">

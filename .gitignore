@@ -7,3 +7,9 @@ dist
 .env
 .env.*
 .env*
+
+# Source assets (cleaned copies live in public/images).
+# Anchored to repo root so they do not also match public/images on
+# case-insensitive filesystems (macOS).
+/Images/
+/files/

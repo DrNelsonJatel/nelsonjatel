@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Testimonials from '../components/Testimonials.astro';
 import { SITE, SPEAKER_REEL } from '../consts';
+import { SPEAKING_HISTORY } from '../data/engagements';
 
 const topics = [
   { title: 'What Does Your Network Actually Look Like?', body: 'The hidden map of influence inside any board or organisation, and why the official structure rarely matches it.', href: '/publications', proof: 'Drawn from my published SNA research' },
@@ -10,6 +11,13 @@ const topics = [
   { title: 'Weak Ties, Strong Decisions', body: 'Why the informal connections between people, the ones no policy accounts for, so often drive or stall the formal outcome.', href: '/publications', proof: 'Grounded in network research' },
 ];
 const formats = ['Keynote (30 to 60 minutes)', 'Half-day workshop', 'Board or leadership working session'];
+
+const stage = [
+  { src: '/images/on-stage-2012.webp', w: 600, h: 299, caption: 'On stage, 2012', alt: 'Dr. Nelson Jatel speaking at a podium, 2012' },
+  { src: '/images/environmental-flows-conference-2024.jpg', w: 236, h: 213, caption: 'Environmental Flows Conference, 2024', alt: 'Dr. Nelson Jatel presenting at the Environmental Flows Conference, 2024' },
+  { src: '/images/expert-panel-water-governance.jpg', w: 318, h: 159, caption: 'Expert panel on water governance', alt: 'Dr. Nelson Jatel on an expert panel on water governance' },
+  { src: '/images/ubco-centennial-2025.jpg', w: 240, h: 157, caption: 'UBC Okanagan Centennial, 2025', alt: 'Dr. Nelson Jatel presenting at the UBC Okanagan Centennial, 2025' },
+];
 
 const speakingLd = {
   '@context': 'https://schema.org',
@@ -69,6 +77,40 @@ const speakingLd = {
           of the relationships worth strengthening before they are tested.
         </p>
       </div>
+    </div>
+  </section>
+
+  <section class="section onstage-section">
+    <div class="wrap">
+      <h2>On stage</h2>
+      <div class="onstage-grid">
+        {stage.map((s) => (
+          <figure class="onstage">
+            <img src={s.src} alt={s.alt} width={s.w} height={s.h} loading="lazy" />
+            <figcaption>{s.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section engagements-section">
+    <div class="wrap">
+      <h2>Selected speaking engagements</h2>
+      <ul class="engagements">
+        {SPEAKING_HISTORY.map((e) => (
+          <li class="engagement">
+            <span class="engagement-year mono">{e.year}</span>
+            <span class="engagement-body">
+              <span class="engagement-title">
+                {e.url ? <a href={e.url} target="_blank" rel="noopener">{e.title}</a> : e.title}
+              </span>
+              {e.host && <span class="engagement-host">{e.host}</span>}
+              {e.note && <span class="engagement-note">{e.note}</span>}
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -170,6 +212,19 @@ const speakingLd = {
   .topic p{ margin-top:0.6rem; }
   .topic-proof{ display:inline-block; margin-top:0.85rem; color:var(--signal); font-size:0.85rem; font-weight:600; }
   .topic-proof:hover{ color:var(--signal-hi); }
+  .onstage-section{ border-top:1px solid var(--hairline); }
+  .onstage-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:1.5rem; }
+  .onstage{ margin:0; }
+  .onstage img{ width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:3px; border:1px solid var(--hairline); display:block; background:var(--ground-soft); }
+  .onstage figcaption{ margin-top:0.5rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--slate); }
+  .engagements-section{ border-top:1px solid var(--hairline); }
+  .engagements{ list-style:none; padding:0; margin-top:1.5rem; }
+  .engagement{ display:grid; grid-template-columns:5rem 1fr; gap:1.25rem; padding:0.9rem 0; border-bottom:1px solid var(--hairline); align-items:baseline; }
+  .engagement-year{ color:var(--signal); font-size:0.9rem; }
+  .engagement-body{ display:flex; flex-direction:column; gap:0.15rem; }
+  .engagement-title{ color:var(--ink); font-size:1.05rem; }
+  .engagement-host{ color:var(--slate); font-size:0.9rem; }
+  .engagement-note{ color:var(--slate); font-style:italic; font-size:0.9rem; }
   .kit-links{ display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap; }
   .kit-view{ color:var(--signal); font-weight:600; font-size:0.9rem; }
   .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
@@ -182,7 +237,7 @@ const speakingLd = {
   .form-status{ min-height:1.2em; margin-top:0.6rem; }
   .form-status[data-kind="error"]{ color:#e88a8a; }
   .form-status[data-kind="ok"]{ color:var(--ink); }
-  @media (max-width:767px){ .topics, .two-col, .speaking-intro{ grid-template-columns:1fr; } .speaking-photo{ max-width:360px; } }
+  @media (max-width:767px){ .topics, .two-col, .speaking-intro{ grid-template-columns:1fr; } .speaking-photo{ max-width:360px; } .onstage-grid{ grid-template-columns:repeat(2,1fr); } }
 </style>
 
 <script>
