@@ -63,6 +63,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
 
   @media (max-width:767px){
     .nav-disclosure[open] .nav{
+      display:flex;
       position:absolute; left:0; right:0; top:64px;
       flex-direction:column; align-items:flex-start; gap:1.1rem;
       background:var(--ground-deep); border-bottom:1px solid var(--hairline);
