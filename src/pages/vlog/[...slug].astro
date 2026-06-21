@@ -1,0 +1,103 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import NewsletterForm from '../../components/NewsletterForm.astro';
+import { CLOSER, SITE } from '../../consts';
+
+const live = (d: { draft?: boolean }) => (import.meta.env.PROD ? !d.draft : true);
+
+export async function getStaticPaths() {
+  const all = await getCollection('vlog');
+  const live = (d: { draft?: boolean }) => (import.meta.env.PROD ? !d.draft : true);
+  return all.filter((v) => live(v.data)).map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, youtube, dek, pubDate, thread } = entry.data;
+
+// Cross-links via the shared thread: the companion newsletter edition + shorts.
+const edition = thread
+  ? (await getCollection('newsletter')).find((e) => live(e.data) && e.data.thread === thread)
+  : undefined;
+const shorts = thread
+  ? (await getCollection('episodes'))
+      .filter((s) => live(s.data) && s.data.thread === thread)
+      .sort((a, b) => a.data.episode - b.data.episode)
+  : [];
+
+const embedUrl = `https://www.youtube-nocookie.com/embed/${youtube}`;
+const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const videoLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: title,
+  description: dek,
+  thumbnailUrl: `https://i.ytimg.com/vi/${youtube}/hqdefault.jpg`,
+  uploadDate: pubDate.toISOString(),
+  embedUrl,
+  contentUrl: `https://www.youtube.com/watch?v=${youtube}`,
+  author: { '@type': 'Person', name: SITE.author },
+};
+---
+<Base title={title} description={dek} image={`https://i.ytimg.com/vi/${youtube}/maxresdefault.jpg`}>
+  <article class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow"><a href="/vlog">The Vlog</a> · {fmt(pubDate)}</p>
+      <h1>{title}</h1>
+      <p class="dek">{dek}</p>
+
+      <div class="video">
+        <iframe src={embedUrl} title={title} loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+      <div class="prose"><Content /></div>
+
+      {(edition || shorts.length > 0) && (
+        <aside class="related">
+          <p class="related-h">In this thread</p>
+          {edition && (
+            <a class="related-link" href={`/newsletter/${edition.id}/`}>
+              <span class="related-kind mono">The Signal</span>
+              {edition.data.title}
+            </a>
+          )}
+          {shorts.map((s) => (
+            <a class="related-link" href={`/signals/${s.id}/`}>
+              <span class="related-kind mono">Short · Episode {s.data.episode}</span>
+              {s.data.title}
+            </a>
+          ))}
+        </aside>
+      )}
+
+      <p class="closer-line">{CLOSER}</p>
+
+      <hr class="trace" />
+      <NewsletterForm />
+      <p class="back"><a href="/vlog">← All vlogs</a></p>
+    </div>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(videoLd)} />
+</Base>
+
+<style>
+  .dek{ font-family:var(--font-display); font-size:1.4rem; line-height:1.3; color:var(--slate); max-width:42ch; }
+  .video{ position:relative; aspect-ratio:16/9; border:1px solid var(--hairline); border-radius:3px; overflow:hidden; }
+  .video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .prose{ max-width:38rem; }
+  .prose :global(p){ color:var(--ink); margin-block:1.1rem; line-height:1.7; }
+  .prose :global(h2){ margin-top:2rem; font-size:1.45rem; font-family:var(--font-display); color:var(--ink); }
+  .related{ border:1px solid var(--hairline); border-radius:3px; background:var(--ground-soft); padding:1.25rem 1.5rem; }
+  .related-h{ font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--slate); margin-bottom:0.6rem; }
+  .related-link{ display:block; padding:0.5rem 0; border-top:1px solid var(--hairline); color:var(--ink); }
+  .related-link:first-of-type{ border-top:0; }
+  .related-link:hover{ color:var(--signal); text-decoration:none; }
+  .related-kind{ display:block; font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--signal); }
+  .closer-line{ font-family:var(--font-display); font-style:italic; color:var(--slate); font-size:1.15rem; }
+  .back a{ color:var(--signal); }
+</style>

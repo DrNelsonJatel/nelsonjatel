@@ -14,6 +14,12 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { title, issue, dek, pubDate } = entry.data;
 
+// Backlink to the companion vlog via the shared thread.
+const liveD = (d: { draft?: boolean }) => (import.meta.env.PROD ? !d.draft : true);
+const vlog = entry.data.thread
+  ? (await getCollection('vlog')).find((v) => liveD(v.data) && v.data.thread === entry.data.thread)
+  : undefined;
+
 const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
 
 const articleLd = {
@@ -33,6 +39,7 @@ const articleLd = {
       <p class="eyebrow"><a href="/newsletter">{NEWSLETTER.name}</a> · Issue {issue} · {fmt(pubDate)}</p>
       <h1>{title}</h1>
       <p class="dek">{dek}</p>
+      {vlog && <p class="watch"><a href={`/vlog/${vlog.id}/`}>Watch the companion vlog →</a></p>}
 
       <div class="prose">
         <Content />
@@ -51,6 +58,7 @@ const articleLd = {
 
 <style>
   .dek{ font-family:var(--font-display); font-size:1.4rem; line-height:1.3; color:var(--slate); max-width:40ch; }
+  .watch a{ color:var(--signal); font-weight:600; }
   .prose{ max-width:38rem; }
   .prose :global(p){ color:var(--ink); margin-block:1.1rem; line-height:1.7; }
   .prose :global(h2){ margin-top:2.25rem; font-size:1.45rem; font-family:var(--font-display); color:var(--ink); }

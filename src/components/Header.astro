@@ -11,17 +11,16 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
       {SITE.wordmark}<span class="wm-desc"> · {SITE.descriptor}</span>
     </a>
 
-    <details class="nav-disclosure">
-      <summary class="nav-toggle" aria-label="Toggle menu">Menu</summary>
-      <nav class="nav" aria-label="Primary">
-        {NAV.map((item) => (
-          <a href={item.href} class:list={['nav-link', { active: isActive(item.href) }]}>
-            {item.label}
-          </a>
-        ))}
-        <a class="btn btn--primary nav-cta" href="/speaking#book">Invite Nelson to speak</a>
-      </nav>
-    </details>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">Menu</button>
+
+    <nav id="primary-nav" class="nav" aria-label="Primary">
+      {NAV.map((item) => (
+        <a href={item.href} class:list={['nav-link', { active: isActive(item.href) }]}>
+          {item.label}
+        </a>
+      ))}
+      <a class="btn btn--primary nav-cta" href="/speaking#book">Invite Nelson to speak</a>
+    </nav>
   </div>
 </header>
 
@@ -34,7 +33,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
   }
   .header-inner{
     display:flex; align-items:center; justify-content:space-between;
-    gap:1rem; min-height:64px;
+    gap:1rem; min-height:64px; position:relative;
   }
   .wordmark{
     font-family:var(--font-mono); font-size:0.9rem; font-weight:500;
@@ -43,6 +42,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
   .wordmark:hover{ text-decoration:none; color:var(--ink); }
   .wm-desc{ color:var(--slate); }
 
+  /* Desktop default: the nav is an inline bar; the toggle is hidden. No JS needed. */
   .nav{ display:flex; align-items:center; gap:clamp(1rem, 2.2vw, 2rem); }
   .nav-link{
     font-family:var(--font-mono); font-size:0.8125rem; letter-spacing:0.06em;
@@ -52,30 +52,41 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
   .nav-link.active{ color:var(--ink); }
   .nav-cta{ font-family:var(--font-body); text-transform:none; letter-spacing:0.01em; padding:0.55em 1em; }
 
-  /* Mobile disclosure (no JS). Desktop overrides flatten it to an inline bar. */
   .nav-toggle{
-    list-style:none; cursor:pointer;
+    display:none; background:none; border:0; cursor:pointer;
     font-family:var(--font-mono); font-size:0.8125rem; letter-spacing:0.08em;
-    text-transform:uppercase; color:var(--ink);
-    padding:0.4rem 0.2rem;
+    text-transform:uppercase; color:var(--ink); padding:0.4rem 0.2rem;
   }
-  .nav-toggle::-webkit-details-marker{ display:none; }
 
+  /* Mobile: collapse the nav behind the toggle button. */
   @media (max-width:767px){
-    .nav-disclosure[open] .nav{
-      display:flex;
+    .nav-toggle{ display:block; }
+    .nav{
+      display:none;
       position:absolute; left:0; right:0; top:64px;
       flex-direction:column; align-items:flex-start; gap:1.1rem;
       background:var(--ground-deep); border-bottom:1px solid var(--hairline);
       padding:1.25rem var(--gutter) 1.75rem;
     }
-    .nav{ display:none; }
+    .nav.open{ display:flex; }
     .nav-cta{ align-self:stretch; text-align:center; }
-  }
-  @media (min-width:768px){
-    .nav-toggle{ display:none; }
-    .nav{ display:flex !important; }
-    .wm-desc{ display:inline; }
   }
   @media (max-width:420px){ .wm-desc{ display:none; } }
 </style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = document.getElementById('primary-nav');
+  btn?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open') ?? false;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  // Close the menu after a link is tapped.
+  nav?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      btn?.setAttribute('aria-expanded', 'false');
+    }),
+  );
+</script>

@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "lint:content": "node scripts/lint-content.mjs",
+    "build": "npm run lint:content && astro build",
+    "vercel-build": "npm run lint:content && astro build",
     "preview": "astro preview",
     "check": "astro check"
   },

@@ -1,0 +1,2 @@
+Add one .md per monthly vlog here (front matter: title, youtube, dek, pubDate, thread, draft).
+Set draft:false to publish at /vlog/<slug>. Use the same 'thread' as the companion newsletter edition and child shorts to auto-link them.

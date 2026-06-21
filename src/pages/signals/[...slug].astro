@@ -14,6 +14,12 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { title, episode, category, youtube, summary, pubDate } = entry.data;
 
+// Backlink to the parent vlog via the shared thread.
+const liveD = (d: { draft?: boolean }) => (import.meta.env.PROD ? !d.draft : true);
+const vlog = entry.data.thread
+  ? (await getCollection('vlog')).find((v) => liveD(v.data) && v.data.thread === entry.data.thread)
+  : undefined;
+
 const embedUrl = `https://www.youtube-nocookie.com/embed/${youtube}`;
 const videoLd = {
   '@context': 'https://schema.org',

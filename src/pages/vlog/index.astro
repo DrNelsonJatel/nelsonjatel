@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import NewsletterForm from '../../components/NewsletterForm.astro';
+
+const all = await getCollection('vlog');
+const vlogs = all
+  .filter((v) => (import.meta.env.PROD ? !v.data.draft : true))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const hasContent = vlogs.length > 0;
+
+const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long' });
+---
+<Base
+  title="The Vlog"
+  description="A monthly video from Dr. Nelson Jatel on water, governance, and the networks beneath the decisions."
+  noindex={!hasContent}
+>
+  <section class="section">
+    <div class="wrap stack-lg">
+      <p class="eyebrow">A monthly video · Water × networks</p>
+      <h1>The Vlog</h1>
+      <p class="measure intro">
+        Once a month I take one idea from where water, governance, and networks meet and trace
+        it in full on video. Each one has a written companion in <a href="/newsletter">The Signal</a>
+        and a set of short clips in <a href="/signals">Signals in the Stream</a>.
+      </p>
+      <NewsletterForm />
+    </div>
+  </section>
+
+  {hasContent && (
+    <section class="section">
+      <div class="wrap">
+        <ul class="vlog-list">
+          {vlogs.map((v) => (
+            <li class="vlog-item">
+              <a href={`/vlog/${v.id}/`}>
+                <img class="vlog-thumb" src={`https://i.ytimg.com/vi/${v.data.youtube}/hqdefault.jpg`} alt={`Thumbnail for ${v.data.title}`} width="480" height="360" loading="lazy" />
+                <div class="vlog-body">
+                  <p class="vlog-meta mono">{fmt(v.data.pubDate)}</p>
+                  <p class="vlog-title">{v.data.title}</p>
+                  <p class="vlog-dek">{v.data.dek}</p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .intro{ color:var(--slate); font-size:1.15rem; }
+  .intro a{ color:var(--signal); }
+  .vlog-list{ list-style:none; padding:0; display:grid; gap:1.5rem; }
+  .vlog-item a{ display:grid; grid-template-columns:240px 1fr; gap:1.5rem; align-items:center; color:inherit; padding:1rem 0; border-bottom:1px solid var(--hairline); }
+  .vlog-item a:hover{ text-decoration:none; }
+  .vlog-item a:hover .vlog-title{ color:var(--signal); }
+  .vlog-thumb{ width:100%; height:auto; border-radius:3px; border:1px solid var(--hairline); }
+  .vlog-meta{ font-size:0.8125rem; letter-spacing:0.04em; color:var(--slate); }
+  .vlog-title{ font-family:var(--font-display); font-size:1.5rem; line-height:1.2; margin-top:0.3rem; color:var(--ink); }
+  .vlog-dek{ color:var(--slate); margin-top:0.4rem; }
+  @media (max-width:639px){ .vlog-item a{ grid-template-columns:1fr; } }
+</style>
