@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!--
+  JATEL Standalone Teleprompter v01 (2026-06-12)
+  Single-file prompter for iPad mini 2 (iOS 12 Safari). No network needed.
+
+  Use: open this file in Safari (host it briefly, email it to yourself and
+  open from Mail, or add to Reading List), paste your script in Setup,
+  press Start. Tap anywhere to pause and resume.
+
+  Written in strict ES5. No fetch, no arrow functions, no flex gap,
+  no optional chaining. Target engine is Safari 12 era WebKit.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Teleprompter</title>
+<style>
+  html, body { margin:0; padding:0; background:#000; height:100%; overflow:hidden;
+    -webkit-user-select:none; -webkit-touch-callout:none;
+    font-family:-apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+  /* Setup panel */
+  #setup { position:fixed; top:0; left:0; right:0; bottom:0; background:#15181c;
+    color:#e8e6e1; padding:16px; z-index:20; }
+  #setup h1 { font-size:13px; letter-spacing:0.12em; text-transform:uppercase;
+    color:#8a9099; margin:4px 0 12px 0; font-weight:600; }
+  #scriptIn { width:100%; height:46%; background:#1d2127; color:#e8e6e1;
+    border:1px solid #2c323b; border-radius:6px; padding:12px; font-size:16px;
+    line-height:1.5; box-sizing:border-box; -webkit-user-select:text; }
+  .ctlrow { margin-top:14px; color:#8a9099; font-size:13px; }
+  .ctlrow span.lab { display:inline-block; width:90px;
+    font-family:Menlo, monospace; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; }
+  .ctlrow button { background:#1d2127; color:#e8e6e1; border:1px solid #2c323b;
+    border-radius:6px; padding:10px 16px; font-size:15px; margin-right:8px; }
+  .ctlrow .val { color:#ffb347; font-family:Menlo, monospace; font-size:13px;
+    margin-right:8px; display:inline-block; min-width:70px; }
+  #startBtn { background:#ffb347; color:#1a1a1a; border:none; border-radius:6px;
+    width:100%; padding:16px; font-size:18px; font-weight:600; margin-top:18px; }
+  #tip { color:#5a6068; font-size:12px; margin-top:14px; line-height:1.6; }
+
+  /* Prompter stage */
+  #stage { position:fixed; top:0; left:0; right:0; bottom:0; overflow:hidden;
+    display:none; }
+  #flip  { position:absolute; top:0; left:0; right:0; bottom:0; }
+  #scroller { position:absolute; left:0; right:0; top:0;
+    padding:50vh 6vw 60vh 6vw; -webkit-transform:translate3d(0,0,0); }
+  #scriptText { color:#fff; font-weight:600; line-height:1.42;
+    white-space:pre-wrap; word-wrap:break-word; }
+  #cueline { position:absolute; left:0; right:0; top:38%; height:0;
+    border-top:1px solid rgba(255,179,71,0.35); pointer-events:none; }
+  #tally { position:absolute; top:12px; left:12px; width:10px; height:10px;
+    border-radius:50%; background:#ffb347; z-index:5; }
+  #tally.rolling { background:#e03b2f; }
+  #exitBtn { position:absolute; top:6px; right:6px; z-index:5;
+    background:rgba(40,44,50,0.85); color:#8a9099; border:1px solid #2c323b;
+    border-radius:6px; padding:8px 14px; font-size:13px; }
+  #hint { position:absolute; bottom:14px; left:0; right:0; text-align:center;
+    color:#6f6f6f; font-family:Menlo, monospace; font-size:13px; z-index:5; }
+</style>
+</head>
+<body>
+
+<div id="setup">
+  <h1>Teleprompter setup</h1>
+  <textarea id="scriptIn" placeholder="Paste your script here..."></textarea>
+  <div class="ctlrow">
+    <span class="lab">Speed</span>
+    <span class="val" id="speedVal">90 px/s</span>
+    <button id="spDn">&minus;</button><button id="spUp">+</button>
+  </div>
+  <div class="ctlrow">
+    <span class="lab">Font</span>
+    <span class="val" id="fontVal">56 px</span>
+    <button id="ftDn">&minus;</button><button id="ftUp">+</button>
+  </div>
+  <div class="ctlrow">
+    <span class="lab">Mirror</span>
+    <button id="mhBtn">Horizontal: on</button>
+    <button id="mvBtn">Vertical: off</button>
+  </div>
+  <button id="startBtn">Start prompter</button>
+  <div id="tip">Tap the screen to pause and resume. Tap Setup (top right)
+    to come back here. Set the iPad to Settings &gt; Display &gt; Auto-Lock
+    &gt; Never before recording so the screen stays on.</div>
+</div>
+
+<div id="stage">
+  <div id="flip">
+    <div id="scroller"><div id="scriptText"></div></div>
+    <div id="cueline"></div>
+  </div>
+  <div id="tally"></div>
+  <button id="exitBtn">Setup</button>
+  <div id="hint">tap to roll</div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var cfg = { speed: 90, fontSize: 56, mirrorH: true, mirrorV: false };
+  var playing = false, y = 0, lastT = 0;
+
+  var el = {};
+  var ids = ["setup", "stage", "flip", "scroller", "scriptText", "tally",
+             "exitBtn", "hint", "scriptIn", "speedVal", "fontVal",
+             "spDn", "spUp", "ftDn", "ftUp", "mhBtn", "mvBtn", "startBtn"];
+  var i;
+  for (i = 0; i < ids.length; i++) el[ids[i]] = document.getElementById(ids[i]);
+
+  function renderSetup() {
+    el.speedVal.textContent = cfg.speed + " px/s";
+    el.fontVal.textContent = cfg.fontSize + " px";
+    el.mhBtn.textContent = "Horizontal: " + (cfg.mirrorH ? "on" : "off");
+    el.mvBtn.textContent = "Vertical: " + (cfg.mirrorV ? "on" : "off");
+  }
+
+  function applyToStage() {
+    el.scriptText.style.fontSize = cfg.fontSize + "px";
+    var tx = cfg.mirrorH ? -1 : 1;
+    var ty = cfg.mirrorV ? -1 : 1;
+    el.flip.style.webkitTransform = "scale(" + tx + "," + ty + ")";
+    el.flip.style.transform = "scale(" + tx + "," + ty + ")";
+  }
+
+  function setText(t) {
+    if (typeof el.scriptText.textContent !== "undefined") {
+      el.scriptText.textContent = t;
+    } else {
+      el.scriptText.innerText = t;
+    }
+  }
+
+  /* Setup controls */
+  el.spDn.onclick = function () { cfg.speed = Math.max(20, cfg.speed - 10); renderSetup(); };
+  el.spUp.onclick = function () { cfg.speed = Math.min(300, cfg.speed + 10); renderSetup(); };
+  el.ftDn.onclick = function () { cfg.fontSize = Math.max(28, cfg.fontSize - 4); renderSetup(); };
+  el.ftUp.onclick = function () { cfg.fontSize = Math.min(120, cfg.fontSize + 4); renderSetup(); };
+  el.mhBtn.onclick = function () { cfg.mirrorH = !cfg.mirrorH; renderSetup(); };
+  el.mvBtn.onclick = function () { cfg.mirrorV = !cfg.mirrorV; renderSetup(); };
+
+  el.startBtn.onclick = function () {
+    var t = el.scriptIn.value;
+    if (!t) t = "No script loaded.\n\nTap Setup and paste your script.";
+    setText(t);
+    applyToStage();
+    y = 0; playing = false;
+    el.scroller.style.webkitTransform = "translate3d(0,0,0)";
+    el.scroller.style.transform = "translate3d(0,0,0)";
+    el.setup.style.display = "none";
+    el.stage.style.display = "block";
+    el.hint.style.display = "block";
+    el.tally.className = "";
+  };
+
+  el.exitBtn.addEventListener("touchend", function (e) {
+    e.stopPropagation(); e.preventDefault();
+    playing = false;
+    el.stage.style.display = "none";
+    el.setup.style.display = "block";
+  }, false);
+  el.exitBtn.onclick = function (e) {
+    if (e) e.stopPropagation();
+    playing = false;
+    el.stage.style.display = "none";
+    el.setup.style.display = "block";
+  };
+
+  /* Tap to roll / hold */
+  el.stage.addEventListener("touchend", function (e) {
+    if (e.target === el.exitBtn) return;
+    playing = !playing;
+    el.tally.className = playing ? "rolling" : "";
+    el.hint.style.display = playing ? "none" : "block";
+    el.hint.textContent = "tap to roll";
+  }, false);
+
+  /* Scroll engine */
+  function frame(t) {
+    if (!lastT) lastT = t;
+    var dt = (t - lastT) / 1000;
+    lastT = t;
+    if (playing) {
+      y += cfg.speed * dt;
+      var max = el.scroller.offsetHeight - window.innerHeight * 0.2;
+      if (y > max) {
+        y = max; playing = false;
+        el.tally.className = "";
+        el.hint.style.display = "block";
+        el.hint.textContent = "end of script, tap Setup to reload";
+      }
+      el.scroller.style.webkitTransform = "translate3d(0," + (-y) + "px,0)";
+      el.scroller.style.transform = "translate3d(0," + (-y) + "px,0)";
+    }
+    window.requestAnimationFrame(frame);
+  }
+
+  renderSetup();
+  window.requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
