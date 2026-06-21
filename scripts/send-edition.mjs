@@ -43,6 +43,7 @@ const [slug, ...rest] = process.argv.slice(2);
 const testIdx = rest.indexOf('--test');
 const testEmail = testIdx >= 0 ? rest[testIdx + 1] : null;
 const doSend = rest.includes('--send');
+const wantHtml = rest.includes('--html');
 
 if (!slug) {
   console.error('Usage: node scripts/send-edition.mjs <slug> [--test <email>] [--send]');
@@ -63,12 +64,30 @@ const body = fm[2].trim();
 const editionUrl = `https://nelsonjatel.com/newsletter/${slug}`;
 const subject = `The Signal: ${meta.title}`;
 
-const html = `<div style="max-width:600px;margin:0 auto;font-family:Georgia,'Times New Roman',serif;color:#15242b;line-height:1.6;font-size:17px">
-  <p style="font-family:ui-monospace,monospace;font-size:12px;letter-spacing:0.06em;color:#7a8a91;text-transform:uppercase">The Signal &middot; Issue ${meta.issue}</p>
-  <h1 style="font-size:26px;line-height:1.2;margin:0.2em 0">${meta.title}</h1>
-  <p style="color:#52636b;font-style:italic;font-size:18px">${meta.dek}</p>
-  ${marked.parse(body)}
-  <p style="margin-top:1.5em"><a href="${editionUrl}" style="color:#c7811f">Read this edition online &rarr;</a></p>
+// Email applies the brand's light palette (the print treatment): white ground,
+// deep-teal serif headings, sans body, amber signal accents, mono eyebrow.
+// Web fonts do not load in email, so brand typefaces fall back to Georgia /
+// Arial, which keep the serif-display + sans-body contrast.
+const SERIF = "Georgia,'Times New Roman',serif";
+const SANS = "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif";
+const TEAL = '#0C2E3D', INK = '#1A2227', SLATE = '#3A4A52', AMBER = '#9A6A12', SIGNAL = '#F3B24E';
+
+const bodyHtml = marked.parse(body)
+  .replace(/<h2>/g, `<h2 style="font-family:${SERIF};font-size:21px;color:${TEAL};margin:1.6em 0 0.4em">`)
+  .replace(/<p>/g, `<p style="margin:0 0 1.1em">`)
+  .replace(/<strong>/g, `<strong style="color:${TEAL}">`)
+  .replace(/<a /g, `<a style="color:${AMBER}" `);
+
+const html = `<div style="background:#F4F6F6;padding:24px 0;font-family:${SANS}">
+  <div style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #E2E8EA;border-radius:4px;padding:36px 40px;color:${INK};font-size:17px;line-height:1.7">
+    <p style="font-family:ui-monospace,'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.12em;color:${SLATE};text-transform:uppercase;margin:0">The Signal &middot; Issue ${meta.issue}</p>
+    <h1 style="font-family:${SERIF};font-size:28px;line-height:1.2;color:${TEAL};margin:0.3em 0 0.2em">${meta.title}</h1>
+    <p style="font-family:${SERIF};color:${SLATE};font-style:italic;font-size:18px;margin:0">${meta.dek}</p>
+    <hr style="border:0;border-top:2px solid ${SIGNAL};width:48px;margin:22px 0 26px 0;height:0" />
+    ${bodyHtml}
+    <p style="font-family:${SERIF};font-style:italic;color:${SLATE};font-size:16px;margin:1.8em 0 1.2em">It all feels like noise, until you trace the signal.</p>
+    <p style="margin:0"><a href="${editionUrl}" style="color:${AMBER};font-weight:bold">Read this edition online &rarr;</a></p>
+  </div>
 </div>`;
 
 // Plain-text version: strip the lightest markdown so it reads cleanly.
@@ -76,6 +95,9 @@ const text =
   `THE SIGNAL · Issue ${meta.issue}\n${meta.title}\n${meta.dek}\n\n` +
   body.replace(/^#+\s*/gm, '').replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1') +
   `\n\nRead online: ${editionUrl}`;
+
+// --html: print the rendered email HTML and exit (preview, or paste into Kit).
+if (wantHtml) { process.stdout.write(html); process.exit(0); }
 
 async function callEngine(extra) {
   const res = await fetch(`${URL}/rest/v1/rpc/send_edition`, {
