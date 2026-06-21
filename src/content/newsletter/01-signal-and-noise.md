@@ -1,14 +1,14 @@
 ---
 issue: 1
 title: How to tell the signal from the noise
-dek: Welcome to the monthly long read. Why social network analysis is the instrument that separates the real pattern from the static, told through three studies.
+dek: Welcome to the monthly field note. Why social network analysis is the instrument that separates the real pattern from the static, told through three studies.
 pubDate: 2026-06-20
 draft: false
 ---
 
 Welcome to **The Signal**.
 
-This is the first issue of The Signal, a monthly letter and the longer, slower companion to my weekly *Signals in the Stream* shorts. The name is not decoration. Almost everything we try to understand about people and organisations arrives as noise: too many voices, too many anecdotes, too many numbers pointing in different directions. The hard part is not collecting more of it. The hard part is telling the signal, the pattern that actually matters, from the static around it.
+This is the first issue of The Signal, a monthly field note from where water, governance, and networks meet. The name is not decoration. Almost everything we try to understand about people and organisations arrives as noise: too many voices, too many anecdotes, too many numbers pointing in different directions. The hard part is not collecting more of it. The hard part is telling the signal, the pattern that actually matters, from the static around it.
 
 For twenty years that has been my work, and the instrument I keep reaching for is social network analysis. It does one thing very well. It stops looking at people one at a time and starts measuring the relationships between them. That shift, from counting actors to mapping connections, is often what turns noise into signal. Let me show you with three studies.
 

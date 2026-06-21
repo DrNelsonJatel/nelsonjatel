@@ -49,12 +49,12 @@ export const SOCIAL = {
 // public key insert only, never read. The submit handler lives in
 // src/scripts/enquiry.ts.
 
-// The Signal: a monthly long-read newsletter, the companion to the weekly
-// Signals in the Stream shorts. Native build on Supabase (subscribers, double
-// opt-in) + Resend (delivery), with a web archive under /newsletter.
+// The Signal: a monthly field-note newsletter, the written companion to the
+// monthly vlog. Native build on Supabase (subscribers, double opt-in) + Kit
+// (delivery/automations; Resend fallback), with a web archive under /newsletter.
 export const NEWSLETTER = {
   name: 'The Signal',
-  tagline: 'The monthly long read from Signals in the Stream.',
+  tagline: 'A monthly field note on water, governance, and networks.',
   prompt: 'One idea a month from where water, governance, and networks meet. Traced in full, no noise.',
   // Flip to true once the double opt-in backend is live; gates the signup form.
   enabled: true,
