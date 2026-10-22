@@ -9,6 +9,15 @@ export interface Tool {
 
 export const TOOLS: Tool[] = [
   {
+    name: 'Global Water Trends',
+    description:
+      'Groundwater, stream temperature and lake inflow drawn in 3D, from 1,693 aquifer ' +
+      'systems worldwide to the Okanagan’s observation wells, creeks and lake. Every scene ' +
+      'lists its method, QAQC checks, known gaps and sources, and the graphics are open ' +
+      'under CC BY 4.0.',
+    url: 'https://water.nelsonjatel.com/',
+  },
+  {
     name: 'temp.stream',
     description:
       'Monitors and forecasts stream temperature in Okanagan creeks, and flags when the ' +
