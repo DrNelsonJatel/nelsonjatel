@@ -86,7 +86,7 @@ p{ max-width:var(--measure); }
 .mono{ font-family:var(--font-mono); }
 .signal{ color:var(--signal); }
 .muted{ color:var(--slate); }
-.fine{ color:var(--recessive); font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.04em; }
+.fine{ color:var(--slate); font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.04em; }
 
 /* the traced-signal hairline echo between sections */
 .trace{
