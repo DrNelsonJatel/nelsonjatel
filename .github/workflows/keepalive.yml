@@ -1,0 +1,35 @@
+# Supabase free-plan keepalive: writes the heartbeat row every 6 hours.
+# Backs up the daily Vercel cron (api/keepalive.js). Uses the publishable key,
+# which is already public in the site's client JS; kept in secrets for tidiness.
+# Note: GitHub disables schedules in public repos after 60 days without commits;
+# the Vercel cron keeps running regardless.
+name: supabase-keepalive
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+permissions: {}
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping and verify heartbeat
+        env:
+          SB_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          SB_KEY: ${{ secrets.PUBLIC_SUPABASE_KEY }}
+        run: |
+          set -euo pipefail
+          [ -n "$SB_URL" ] && [ -n "$SB_KEY" ] || { echo "FLAG secrets missing"; exit 1; }
+          body=$(curl -sS --fail-with-body --retry 3 --retry-delay 20 -X POST \
+            -H "apikey: $SB_KEY" -H "Authorization: Bearer $SB_KEY" \
+            -H "content-type: application/json" -d '{}' \
+            "$SB_URL/rest/v1/rpc/keepalive_ping")
+          echo "response: $body"
+          ts=$(echo "$body" | tr -d '"')
+          age=$(( $(date -u +%s) - $(date -u -d "$ts" +%s) ))
+          if [ "$age" -ge 0 ] && [ "$age" -lt 120 ]; then
+            echo "PASS heartbeat written ${age}s ago"
+          else
+            echo "FLAG heartbeat timestamp $ts is ${age}s old"; exit 1
+          fi
